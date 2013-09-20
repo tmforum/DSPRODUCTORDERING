@@ -5,6 +5,7 @@
 package tmf.org.dsmapi.ordering.service;
 
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,15 +17,25 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import tmf.org.dsmapi.hub.service.PublisherLocal;
 import tmf.org.dsmapi.ordering.ProductOrder;
+import tmf.org.dsmapi.ordering.ProductOrderItem;
+import tmf.org.dsmapi.ordering.RelatedParty;
 
 /**
  *
  * @author pierregauthier
  */
 @Stateless
-@Path("tmf.org.dsmapi.ordering.productorder")
+@Path("productOrder")
 public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
+    
+    @EJB
+    WorkFlowLocalLocal workflow;
+    @EJB
+    PublisherLocal publisher;
+    
+    
     @PersistenceContext(unitName = "DSProductOrderingPU")
     private EntityManager em;
 
@@ -33,15 +44,18 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
     }
 
     @POST
-    @Override
-    @Consumes({"application/xml", "application/json"})
-    public void create(ProductOrder entity) {
+    @Consumes({ "application/json"})
+    @Produces({ "application/json"})
+    public ProductOrder createOrder(ProductOrder entity) {
         super.create(entity);
+        //creating order calling workflow
+        workflow.execute(entity);
+        return entity;
     }
 
     @PUT
     @Override
-    @Consumes({"application/xml", "application/json"})
+    @Consumes({ "application/json"})
     public void edit(ProductOrder entity) {
         super.edit(entity);
     }
@@ -54,21 +68,46 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
 
     @GET
     @Path("{id}")
-    @Produces({"application/xml", "application/json"})
+    @Produces({ "application/json"})
     public ProductOrder find(@PathParam("id") String id) {
         return super.find(id);
+    }
+    
+    @GET
+    @Path("proto")
+    @Produces({ "application/json"})
+    public ProductOrder proto() {
+        ProductOrder po = new ProductOrder();
+       
+        String par = null;
+        po.setCompletionDate(par);
+        po.setDescription(par);
+        po.setExternalID(par);
+        po.setOrderDate(par);
+        RelatedParty[] rel = null;
+        po.setRelatedParties(rel);
+        ProductOrderItem[] oitems = null;
+        po.setOrderItems(oitems);
+        String rdate = null;
+        po.setRequestedCompletionDate(rdate);
+        String status = null;
+        po.setStatus(status);
+        String type = null;
+        po.setType(type);
+        
+        return po;
     }
 
     @GET
     @Override
-    @Produces({"application/xml", "application/json"})
+    @Produces({ "application/json"})
     public List<ProductOrder> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
+    @Produces({ "application/json"})
     public List<ProductOrder> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }

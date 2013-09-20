@@ -46,6 +46,7 @@ public class ProductOrder implements Serializable {
     private String externalID;
     private String description;
     private String type;
+    //status
     private String status;
     private String orderDate;
     private String completionDate;
