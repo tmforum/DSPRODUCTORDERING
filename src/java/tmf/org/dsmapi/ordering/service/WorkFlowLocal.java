@@ -10,6 +10,7 @@ import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import tmf.org.dsmapi.hub.ProductOrderEventTypeEnum;
+import tmf.org.dsmapi.ordering.OrderState;
 import tmf.org.dsmapi.ordering.ProductOrder;
 
 /**
@@ -27,10 +28,11 @@ public class WorkFlowLocal implements WorkFlowLocalLocal {
     public void execute(ProductOrder po)  {
         try {
             System.out.println("Excuting order");
-            String status = null;
-            listener.update(po, ProductOrderEventTypeEnum.OrderCreateNotification, status);
+            OrderState status = OrderState.OPEN_RUNNING;
+            listener.update(po, ProductOrderEventTypeEnum.OrderCreateNotification, "reason" ,OrderState.OPEN_RUNNING);
             Thread.sleep(3000);
-            listener.update(po, ProductOrderEventTypeEnum.OrderStatusChangedNotification, status);
+            
+            listener.update(po, ProductOrderEventTypeEnum.OrderStatusChangedNotification, "reason", OrderState.CLOSED_COMPLETED);
             System.out.println("Order Completed");
         } catch (InterruptedException ex) {
             Logger.getLogger(WorkFlowLocal.class.getName()).log(Level.SEVERE, null, ex);

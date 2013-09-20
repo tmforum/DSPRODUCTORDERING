@@ -18,6 +18,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import tmf.org.dsmapi.hub.service.PublisherLocal;
+import tmf.org.dsmapi.ordering.OrderState;
 import tmf.org.dsmapi.ordering.ProductOrder;
 import tmf.org.dsmapi.ordering.ProductOrderItem;
 import tmf.org.dsmapi.ordering.RelatedParty;
@@ -91,7 +92,7 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
         String rdate = null;
         po.setRequestedCompletionDate(rdate);
         String status = null;
-        po.setStatus(status);
+        po.setStatus(OrderState.OPEN_RUNNING);
         String type = null;
         po.setType(type);
         

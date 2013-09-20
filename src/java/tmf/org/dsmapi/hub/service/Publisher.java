@@ -98,7 +98,7 @@ public class Publisher implements PublisherLocal {
         HubEvent event = new HubEvent();
         event.setEvent(po);
         
-         event.setDate(date);
+        event.setDate(date);
         event.setReason(reason);
         event.setEventType(ProductOrderEventTypeEnum.OrderRemoveNotification);
         publish(event);

@@ -7,6 +7,7 @@ package tmf.org.dsmapi.ordering.service;
 import javax.ejb.Asynchronous;
 import javax.ejb.Local;
 import tmf.org.dsmapi.hub.ProductOrderEventTypeEnum;
+import tmf.org.dsmapi.ordering.OrderState;
 import tmf.org.dsmapi.ordering.ProductOrder;
 
 /**
@@ -17,6 +18,6 @@ import tmf.org.dsmapi.ordering.ProductOrder;
 public interface WorkflowListenerLocal {
     
   
-    void update(ProductOrder po, ProductOrderEventTypeEnum state, String status);
+    void update(ProductOrder po, ProductOrderEventTypeEnum state, String reason, OrderState status);
     
 }

@@ -33,7 +33,7 @@ import tmf.org.dsmapi.ordering.ProductOrder;
  * @author pierregauthier
  */
 @Stateless
-@Path("tmf.org.dsmapi.hub.hub")
+@Path("hub")
 public class HubFacadeREST extends AbstractFacade<Hub> {
     @PersistenceContext(unitName = "DSProductOrderingPU")
     private EntityManager em;

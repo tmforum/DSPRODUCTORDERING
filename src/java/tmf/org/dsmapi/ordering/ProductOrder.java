@@ -47,7 +47,7 @@ public class ProductOrder implements Serializable {
     private String description;
     private String type;
     //status
-    private String status;
+    private OrderState status;
     private String orderDate;
     private String completionDate;
     private String requestedCompletionDate;
@@ -78,13 +78,15 @@ public class ProductOrder implements Serializable {
         this.type = type;
     }
 
-    public String getStatus() {
+    public OrderState getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OrderState status) {
         this.status = status;
     }
+
+    
 
     public String getOrderDate() {
         return orderDate;
