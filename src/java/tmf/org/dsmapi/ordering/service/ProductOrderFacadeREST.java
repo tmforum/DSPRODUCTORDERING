@@ -25,7 +25,7 @@ import tmf.org.dsmapi.ordering.ProductOrder;
 @Stateless
 @Path("tmf.org.dsmapi.ordering.productorder")
 public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
-    @PersistenceContext(unitName = "WebApplicationHackPU")
+    @PersistenceContext(unitName = "DSProductOrderingPU")
     private EntityManager em;
 
     public ProductOrderFacadeREST() {
