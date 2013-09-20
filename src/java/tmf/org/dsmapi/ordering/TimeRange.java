@@ -9,13 +9,13 @@ import java.util.Date;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
  *
  * @author pierregauthier
  */
-
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 @Embeddable
 public class TimeRange implements Serializable {
     
