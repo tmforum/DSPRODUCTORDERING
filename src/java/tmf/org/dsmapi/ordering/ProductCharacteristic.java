@@ -5,11 +5,15 @@
 package tmf.org.dsmapi.ordering;
 
 import java.io.Serializable;
+import javax.persistence.Embeddable;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
  *
  * @author pierregauthier
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@Embeddable
 public class ProductCharacteristic implements Serializable{
     
     String name;

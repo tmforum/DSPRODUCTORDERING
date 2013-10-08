@@ -5,6 +5,8 @@
 package tmf.org.dsmapi.ordering;
 
 import java.io.Serializable;
+import javax.persistence.Embeddable;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
  *
@@ -23,6 +25,8 @@ import java.io.Serializable;
             "reference": "Roger Collins"
         }
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@Embeddable
 public class RelatedParty implements Serializable {
     
     private String role;

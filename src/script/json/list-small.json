@@ -1,0 +1,116 @@
+[
+{
+   "externalID": "externalId",
+   "description": "description",
+   "type": "type",
+   "status": "OPEN_RUNNING",
+   "orderDate": "2013-10-03T13:24:40.277+0000",
+   "completionDate": "2013-10-03T13:24:40.277+0000",
+   "requestedCompletionDate": "2013-10-03T13:24:40.278+0000",
+   "relatedParties": [   {
+      "role": "role",
+      "reference": "ref"
+   }],
+   "orderItems":    [
+            {
+         "id": "item1",
+         "state": "Running",
+         "action": "action",
+         "productOffering":          {
+            "href": "href",
+            "name": "name",
+            "description": "description"
+         },
+         "product":          {
+            "productCharacteristics": [            {
+               "name": "name",
+               "value": "value"
+            }],
+            "productSpecification":             {
+               "href": "href",
+               "name": "name",
+               "description": "description"
+            }
+         }
+      },
+            {
+         "id": "item2",
+         "state": "NotStarted",
+         "action": "action",
+         "productOffering":          {
+            "href": "href",
+            "name": "name",
+            "description": "description"
+         },
+         "product":          {
+            "productCharacteristics": [            {
+               "name": "name",
+               "value": "value"
+            }],
+            "productSpecification":             {
+               "href": "href",
+               "name": "name",
+               "description": "description"
+            }
+         }
+      }
+   ]
+},
+{
+   "externalID": "externalId",
+   "description": "description",
+   "type": "type",
+   "status": "OPEN_RUNNING",
+   "orderDate": "2013-10-03T13:24:40.277+0000",
+   "completionDate": "2013-10-03T13:24:40.277+0000",
+   "requestedCompletionDate": "2013-10-03T13:24:40.278+0000",
+   "relatedParties": [   {
+      "role": "role",
+      "reference": "ref"
+   }],
+   "orderItems":    [
+            {
+         "id": "item1",
+         "state": "Running",
+         "action": "action",
+         "productOffering":          {
+            "href": "href",
+            "name": "name",
+            "description": "description"
+         },
+         "product":          {
+            "productCharacteristics": [            {
+               "name": "name",
+               "value": "value"
+            }],
+            "productSpecification":             {
+               "href": "href",
+               "name": "name",
+               "description": "description"
+            }
+         }
+      },
+            {
+         "id": "item2",
+         "state": "NotStarted",
+         "action": "action",
+         "productOffering":          {
+            "href": "href",
+            "name": "name",
+            "description": "description"
+         },
+         "product":          {
+            "productCharacteristics": [            {
+               "name": "name",
+               "value": "value"
+            }],
+            "productSpecification":             {
+               "href": "href",
+               "name": "name",
+               "description": "description"
+            }
+         }
+      }
+   ]
+}
+]

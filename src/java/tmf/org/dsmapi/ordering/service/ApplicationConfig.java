@@ -11,12 +11,14 @@ import javax.ws.rs.core.Application;
  *
  * @author pierregauthier
  */
-@javax.ws.rs.ApplicationPath("webresources")
+@javax.ws.rs.ApplicationPath("api")
 public class ApplicationConfig extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new java.util.HashSet<Class<?>>();
+        resources.add(ProductOrderFacadeREST.class);
+        resources.add(JacksonConfigurator.class);
         // following code can be used to customize Jersey 1.x JSON provider:
         try {
             Class jacksonProvider = Class.forName("org.codehaus.jackson.jaxrs.JacksonJsonProvider");

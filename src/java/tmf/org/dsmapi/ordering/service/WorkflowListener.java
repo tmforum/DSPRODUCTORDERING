@@ -21,7 +21,7 @@ import tmf.org.dsmapi.ordering.ProductOrder;
 public class WorkflowListener implements WorkflowListenerLocal {
     
     @EJB
-    ProductOrderFacadeREST poFacade;
+    ProductOrderFacade poFacade;
     @EJB
     PublisherLocal publisher;
 

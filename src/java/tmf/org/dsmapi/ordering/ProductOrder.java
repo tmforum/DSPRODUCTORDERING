@@ -5,11 +5,22 @@
 package tmf.org.dsmapi.ordering;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.SecondaryTable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
  * {"productOrder": { "id":
@@ -37,6 +48,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ProductOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,13 +58,18 @@ public class ProductOrder implements Serializable {
     private String externalID;
     private String description;
     private String type;
-    //status
+    @Enumerated(value = EnumType.STRING)
     private OrderState status;
-    private String orderDate;
-    private String completionDate;
-    private String requestedCompletionDate;
-    private RelatedParty[] relatedParties;
-    private ProductOrderItem[] orderItems;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date orderDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date completionDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date requestedCompletionDate;
+    @ElementCollection
+    private List<RelatedParty> relatedParties;
+    @ElementCollection
+    private List<ProductOrderItem> orderItems;
 
     public String getExternalID() {
         return externalID;
@@ -88,43 +105,43 @@ public class ProductOrder implements Serializable {
 
     
 
-    public String getOrderDate() {
+    public Date getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(String orderDate) {
+    public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
 
-    public String getCompletionDate() {
+    public Date getCompletionDate() {
         return completionDate;
     }
 
-    public void setCompletionDate(String completionDate) {
+    public void setCompletionDate(Date completionDate) {
         this.completionDate = completionDate;
     }
 
-    public String getRequestedCompletionDate() {
+    public Date getRequestedCompletionDate() {
         return requestedCompletionDate;
     }
 
-    public void setRequestedCompletionDate(String requestedCompletionDate) {
+    public void setRequestedCompletionDate(Date requestedCompletionDate) {
         this.requestedCompletionDate = requestedCompletionDate;
     }
 
-    public RelatedParty[] getRelatedParties() {
+    public List<RelatedParty> getRelatedParties() {
         return relatedParties;
     }
 
-    public void setRelatedParties(RelatedParty[] relatedParties) {
+    public void setRelatedParties(List<RelatedParty> relatedParties) {
         this.relatedParties = relatedParties;
     }
 
-    public ProductOrderItem[] getOrderItems() {
+    public List<ProductOrderItem> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(ProductOrderItem[] orderItems) {
+    public void setOrderItems(List<ProductOrderItem> orderItems) {
         this.orderItems = orderItems;
     }
 

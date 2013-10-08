@@ -1,0 +1,11 @@
+#!/bin/bash
+
+USER=user
+PASSWORD=user
+
+HOST=localhost
+PORT=8080
+CONTEXT=DSPRODUCTORDERING/api/productOrder
+
+LOG_FILE=DSMAPICAT
+LOG_HOME=log
