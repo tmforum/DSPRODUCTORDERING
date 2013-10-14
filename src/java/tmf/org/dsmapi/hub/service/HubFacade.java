@@ -14,7 +14,7 @@ import tmf.org.dsmapi.hub.Hub;
  * @author pierregauthier
  */
 @Stateless
-public class HubFacade extends AbstractFacade<Hub>{
+public class HubFacade extends tmf.org.dsmapi.ordering.service.AbstractFacade<Hub>{
     
     @PersistenceContext(unitName = "DSProductOrderingPU")
     private EntityManager em;

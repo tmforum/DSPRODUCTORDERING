@@ -28,7 +28,6 @@ public class WorkFlowLocal implements WorkFlowLocalLocal {
     public void execute(ProductOrder po)  {
         try {
             System.out.println("Excuting order");
-            OrderState status = OrderState.OPEN_RUNNING;
             listener.update(po, ProductOrderEventTypeEnum.OrderCreateNotification, "reason" ,OrderState.OPEN_RUNNING);
             Thread.sleep(3000);
             

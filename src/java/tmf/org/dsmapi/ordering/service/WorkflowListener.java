@@ -4,6 +4,7 @@
  */
 package tmf.org.dsmapi.ordering.service;
 
+import java.util.Date;
 import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -34,10 +35,10 @@ public class WorkflowListener implements WorkflowListenerLocal {
        
         switch(eventType) {
             case OrderCreateNotification:
-                publisher.publishOrderCreateNotification(po, null, null);
+                publisher.publishOrderCreateNotification(po, reason, new Date());
             break;
             case OrderStatusChangedNotification:
-                publisher.publishOrderStatusChangedNotification(po, null, null);
+                publisher.publishOrderStatusChangedNotification(po, reason, new Date());
             break;
         }
     }

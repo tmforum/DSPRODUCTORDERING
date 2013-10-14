@@ -2,33 +2,36 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package tmf.org.dsmapi.ordering.service;
+package tmf.org.dsmapi.hub.service;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import tmf.org.dsmapi.hub.service.HubEventFacade;
-import tmf.org.dsmapi.ordering.ProductOrder;
+import tmf.org.dsmapi.hub.HubEvent;
 
 /**
  *
  * @author pierregauthier
  */
 @Stateless
-public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
-
+public class HubEventFacade extends tmf.org.dsmapi.ordering.service.AbstractFacade<HubEvent>{
+    
     @PersistenceContext(unitName = "DSProductOrderingPU")
     private EntityManager em;
-    @EJB
-    HubEventFacade eventManager;
+   
 
-    public ProductOrderFacade() {
-        super(ProductOrder.class);
+    
+    /**
+     *
+     */
+    public HubEventFacade() {
+        super(HubEvent.class);
     }
+
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
+
 }

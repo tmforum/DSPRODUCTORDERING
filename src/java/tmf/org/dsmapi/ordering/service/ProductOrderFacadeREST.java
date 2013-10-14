@@ -4,9 +4,11 @@
  */
 package tmf.org.dsmapi.ordering.service;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import javax.ejb.EJB;
@@ -24,7 +26,6 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import org.codehaus.jackson.node.ObjectNode;
-import tmf.org.dsmapi.commons.exceptions.BadUsageException;
 import tmf.org.dsmapi.hub.service.PublisherLocal;
 import tmf.org.dsmapi.ordering.OrderItemStateEnum;
 import tmf.org.dsmapi.ordering.OrderState;
@@ -90,7 +91,7 @@ public class ProductOrderFacadeREST {
     public Response findByCriteriaWithFields(@Context UriInfo info) {
 
         // search criteria
-        MultivaluedMap<String, String> criteria = info.getQueryParameters();
+        MultivaluedMap<String, String> criteria = FacadeRestUtil.parseFields(info);
         // fields to filter view
         Set<String> fieldSet = FacadeRestUtil.getFieldSet(criteria);
 
@@ -164,8 +165,7 @@ public class ProductOrderFacadeREST {
     @Path("admin")
     @Consumes({"application/json"})
     @Produces({"application/json"})
-    public Response createList(List<ProductOrder> entities) {
-
+    public Response createList(LinkedList<ProductOrder> entities) {
         if (entities == null) {
             return Response.status(Response.Status.BAD_REQUEST.getStatusCode()).build();
         }
@@ -207,6 +207,7 @@ public class ProductOrderFacadeREST {
     public ProductOrder proto() {
         ProductOrder po = new ProductOrder();
 
+        po.setId("1");
         po.setCompletionDate(new Date());
         po.setDescription("description");
         po.setExternalID("externalId");
@@ -230,7 +231,7 @@ public class ProductOrderFacadeREST {
 
         RefInfo refInfo = new RefInfo();
         refInfo.setDescription("description");
-        refInfo.setHref("href");
+        refInfo.setId("id");
         refInfo.setName("name");
         product.setProductSpecification(refInfo);
 

@@ -15,7 +15,6 @@ import tmf.org.dsmapi.hub.HubEvent;
 import tmf.org.dsmapi.hub.ProductOrderEventTypeEnum;
 import tmf.org.dsmapi.ordering.ProductOrder;
 
-
 /**
  *
  * @author pierregauthier should be async or called with MDB
@@ -27,6 +26,8 @@ public class Publisher implements PublisherLocal {
 
     @EJB
     HubFacade hubFacade;
+    @EJB
+    HubEventFacade hubEventFacade;
     @EJB
     RESTEventPublisherLocal restEventPublisher;
 
@@ -40,6 +41,15 @@ public class Publisher implements PublisherLocal {
     @Override
     public void publish(Object event) {
         System.out.println("Sending Event");
+        
+        String id = null;
+
+        if (event instanceof HubEvent) {
+            HubEvent hubEvent = (HubEvent)event;
+            hubEvent.setId(null);
+            hubEventFacade.create(hubEvent);
+            id = hubEvent.getId();
+        }
 
         List<Hub> hubList = hubFacade.findAll();
         Iterator<Hub> it = hubList.iterator();
@@ -50,14 +60,14 @@ public class Publisher implements PublisherLocal {
 
             //Thread.currentThread().sleep(1000);
         }
-        System.out.println("Sending Event After");
+        System.out.println("Sending Event After, id of event : "+id);
     }
 
     @Override
     public void publishOrderCreateNotification(ProductOrder po, String reason, Date date) {
         HubEvent event = new HubEvent();
         event.setEvent(po);
-         event.setDate(date);
+        event.setDate(date);
         event.setReason(reason);
         event.setEventType(ProductOrderEventTypeEnum.OrderCreateNotification);
         publish(event);
@@ -69,7 +79,7 @@ public class Publisher implements PublisherLocal {
 
         HubEvent event = new HubEvent();
         event.setEvent(po);
-         event.setDate(date);
+        event.setDate(date);
         event.setReason(reason);
         event.setEventType(ProductOrderEventTypeEnum.OrderStatusChangedNotification);
         publish(event);
@@ -97,12 +107,11 @@ public class Publisher implements PublisherLocal {
 
         HubEvent event = new HubEvent();
         event.setEvent(po);
-        
+
         event.setDate(date);
         event.setReason(reason);
         event.setEventType(ProductOrderEventTypeEnum.OrderRemoveNotification);
         publish(event);
 
     }
-
 }

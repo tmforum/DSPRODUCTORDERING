@@ -33,6 +33,7 @@ public class PostEventClient {
     }
 
     public void publishEvent(Object requestEntity) throws UniformInterfaceException {
+        System.out.println("publishEvent "+requestEntity);
         webResource.path("").type(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(requestEntity);
     }
 

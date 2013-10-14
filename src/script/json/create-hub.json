@@ -1,0 +1,4 @@
+{
+    "callback": "http://localhost:8080/DSPRODUCTORDERING/api/hub/listener",
+    "query": "eventType=OrderCreateNotification,OrderStatusChangedNotification"
+}

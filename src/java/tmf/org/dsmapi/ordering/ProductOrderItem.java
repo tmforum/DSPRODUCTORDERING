@@ -5,22 +5,13 @@
 package tmf.org.dsmapi.ordering;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
@@ -66,7 +57,7 @@ public class ProductOrderItem implements Serializable{
                 @Column(name = "PRODUCT_OFFERING_NAME")),
         @AttributeOverride(name = "description", column =
                 @Column(name = "PRODUCT_OFFERING_DESC")),
-        @AttributeOverride(name = "href", column =
+        @AttributeOverride(name = "id", column =
                 @Column(name = "PRODUCT_OFFERING_ID"))
     })
     RefInfo productOffering;

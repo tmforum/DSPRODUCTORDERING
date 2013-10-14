@@ -17,16 +17,16 @@ public class RefInfo implements Serializable {
 
     
     
-    String href;
+    String id;
     String name;
     String description;
 
-    public String getHref() {
-        return href;
+    public String getId() {
+        return id;
     }
 
-    public void setHref(String href) {
-        this.href = href;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -48,7 +48,7 @@ public class RefInfo implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + (this.href != null ? this.href.hashCode() : 0);
+        hash = 47 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
@@ -61,7 +61,7 @@ public class RefInfo implements Serializable {
             return false;
         }
         final RefInfo other = (RefInfo) obj;
-        if ((this.href == null) ? (other.href != null) : !this.href.equals(other.href)) {
+        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
             return false;
         }
         return true;
