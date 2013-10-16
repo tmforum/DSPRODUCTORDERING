@@ -18,6 +18,7 @@ public class ApplicationConfig extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new java.util.HashSet<Class<?>>();
         resources.add(ProductOrderFacadeREST.class);
+        resources.add(AdminFacadeREST.class);
         resources.add(JacksonConfigurator.class);
         // following code can be used to customize Jersey 1.x JSON provider:
         try {

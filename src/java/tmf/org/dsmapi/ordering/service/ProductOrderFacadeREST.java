@@ -4,17 +4,14 @@
  */
 package tmf.org.dsmapi.ordering.service;
 
-import java.net.URI;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -35,7 +32,6 @@ import tmf.org.dsmapi.ordering.ProductOrder;
 import tmf.org.dsmapi.ordering.ProductOrderItem;
 import tmf.org.dsmapi.ordering.RefInfo;
 import tmf.org.dsmapi.ordering.RelatedParty;
-import tmf.org.dsmapi.ordering.Report;
 
 /**
  *
@@ -146,59 +142,6 @@ public class ProductOrderFacadeREST {
             response = Response.status(Response.Status.NOT_FOUND).build();
         }
         return response;
-    }
-
-    @DELETE
-    @Path("admin/{id}")
-    public void remove(@PathParam("id") String id) {
-        manager.remove(manager.find(id));
-    }
-
-    @GET
-    @Path("admin/count")
-    @Produces({"application/json"})
-    public Report count() {
-        return new Report(manager.count());
-    }
-
-    @POST
-    @Path("admin")
-    @Consumes({"application/json"})
-    @Produces({"application/json"})
-    public Response createList(LinkedList<ProductOrder> entities) {
-        if (entities == null) {
-            return Response.status(Response.Status.BAD_REQUEST.getStatusCode()).build();
-        }
-
-        int previousRows = manager.count();
-        int affectedRows;
-
-        affectedRows = manager.create(entities);
-
-        Report stat = new Report(manager.count());
-        stat.setAffectedRows(affectedRows);
-        stat.setPreviousRows(previousRows);
-
-        // 201 OK
-        return Response.created(null).
-                entity(stat).
-                build();
-    }
-
-    @DELETE
-    @Path("admin")
-    public Report deleteAll() {
-
-        int previousRows = manager.count();
-        manager.removeAll();
-        int currentRows = manager.count();
-        int affectedRows = previousRows - currentRows;
-
-        Report stat = new Report(currentRows);
-        stat.setAffectedRows(affectedRows);
-        stat.setPreviousRows(previousRows);
-
-        return stat;
     }
 
     @GET

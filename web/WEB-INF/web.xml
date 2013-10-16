@@ -3,20 +3,16 @@
 	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
 
-<servlet>
+<!--<servlet>
     <servlet-name>RestServlet</servlet-name>
     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 
-  
- <!--   
- <init-param> 
-   <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name> 
-   <param-value>tmf.org.dsmapi.tt.RequestFilter</param-value> 
-</init-param> 
--->
+    <init-param>
+        <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+        <param-value>true</param-value>
+    </init-param>
 </servlet>
 
-	<!-- 
 	<servlet-mapping>
 		<servlet-name>Jersey REST Service</servlet-name>
 		<url-pattern>/api/</url-pattern>
@@ -44,7 +40,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Secure REST</web-resource-name>
-			<url-pattern>/api/troubleTicket/*</url-pattern>
+			<url-pattern>/api/productOrdering/*</url-pattern>
 			<http-method>GET</http-method>
                         <http-method>POST</http-method>
                         <http-method>PUT</http-method>
