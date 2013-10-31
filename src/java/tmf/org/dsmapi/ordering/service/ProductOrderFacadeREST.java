@@ -145,9 +145,9 @@ public class ProductOrderFacadeREST {
     }
 
     @GET
-    @Path("proto")
+    @Path("mock")
     @Produces({"application/json"})
-    public ProductOrder proto() {
+    public ProductOrder mock() {
         ProductOrder po = new ProductOrder();
 
         po.setId("1");

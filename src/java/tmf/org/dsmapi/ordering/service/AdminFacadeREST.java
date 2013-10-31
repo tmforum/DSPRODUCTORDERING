@@ -16,6 +16,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import tmf.org.dsmapi.hub.service.HubEventFacade;
+import tmf.org.dsmapi.hub.service.HubFacade;
 import tmf.org.dsmapi.ordering.ProductOrder;
 import tmf.org.dsmapi.ordering.Report;
 
@@ -31,14 +32,28 @@ public class AdminFacadeREST {
     ProductOrderFacade manager;
     @EJB
     HubEventFacade eventManager;
+    @EJB
+    HubFacade hubManager;    
 
     public AdminFacadeREST() {
     }
 
     @DELETE
     @Path("productOrder/{id}")
-    public void remove(@PathParam("id") String id) {
+    public Report remove(@PathParam("id") String id) {
+
         manager.remove(manager.find(id));
+        eventManager.removeAll();
+        int previousRows = manager.count();
+        manager.removeAll();
+        int currentRows = manager.count();
+        int affectedRows = previousRows - currentRows;
+
+        Report stat = new Report(currentRows);
+        stat.setAffectedRows(affectedRows);
+        stat.setPreviousRows(previousRows);
+
+        return stat;
     }
 
     @GET
@@ -88,4 +103,40 @@ public class AdminFacadeREST {
 
         return stat;
     }
+    
+    /**
+     *
+     * @return
+     */
+    @DELETE
+    @Path("hub")
+    public Report deleteAllHub() {
+
+        int previousRows = hubManager.count();
+        hubManager.removeAll();
+        int currentRows = hubManager.count();
+        int affectedRows = previousRows - currentRows;
+
+        Report stat = new Report(currentRows);
+        stat.setAffectedRows(affectedRows);
+        stat.setPreviousRows(previousRows);
+
+        return stat;
+    }
+    
+    @DELETE
+    @Path("event")
+    public Report deleteAllEvent() {
+
+        int previousRows = eventManager.count();
+        eventManager.removeAll();
+        int currentRows = eventManager.count();
+        int affectedRows = previousRows - currentRows;
+
+        Report stat = new Report(currentRows);
+        stat.setAffectedRows(affectedRows);
+        stat.setPreviousRows(previousRows);
+
+        return stat;
+    }    
 }

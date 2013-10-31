@@ -113,23 +113,6 @@ public class HubFacadeREST {
 
     }
 
-    @DELETE
-    @Path("event")
-    public Report deleteAllEvents() {
-
-        int previousRows = hubEventManager.count();
-        hubEventManager.removeAll();
-        int currentRows = hubEventManager.count();
-        int affectedRows = previousRows - currentRows;
-
-        Report stat = new Report(currentRows);
-        stat.setAffectedRows(affectedRows);
-        stat.setPreviousRows(previousRows);
-
-        return stat;
-    }
-
-
     @GET
     @Path("listener")
     @Produces({"application/json"})
@@ -169,9 +152,9 @@ public class HubFacadeREST {
     }
 
     @GET
-    @Path("proto")
+    @Path("mock")
     @Produces({"application/json"})
-    public Hub hubProto() {
+    public Hub hubMock() {
         Hub hub = new Hub();
         hub.setCallback("callback");
         hub.setQuery("queryString");

@@ -1,0 +1,191 @@
+{
+    "date": "2013-10-19T21:37:14.410Z",
+    "event": {
+        "description": "Hackathon order based NBN NFAS Connect order",
+        "externalID": "AMKB Cloud",
+        "id": "406",
+        "orderItems": [
+            {
+                "action": "action",
+                "id": "NTD",
+                "product": {
+                    "productCharacteristics": [
+                        {
+                            "name": "NTD Type",
+                            "value": "Internal"
+                        },
+                        {
+                            "name": "Location",
+                            "value": "Outdoor"
+                        }
+                    ],
+                    "productSpecification": {
+                        "description": "Resource Specification",
+                        "id": "NTD",
+                        "name": "Network Termination Device"
+                    }
+                },
+                "productOffering": {
+                    "description": "NTD supports both voice and data services",
+                    "id": "NTD",
+                    "name": "Network Termination Device"
+                },
+                "state": "Running"
+            },
+            {
+                "action": "action",
+                "id": "UNIV",
+                "product": {
+                    "productCharacteristics": [
+                        {
+                            "name": "UNI Type",
+                            "value": "UNI-D"
+                        },
+                        {
+                            "name": "Port Id",
+                            "value": "0"
+                        },
+                        {
+                            "name": "Speed and Duplex",
+                            "value": "Auto Negotiation"
+                        },
+                        {
+                            "name": "Interface Type",
+                            "value": "10/100/1000BASE-T"
+                        },
+                        {
+                            "name": "UNI Transient Id",
+                            "value": "UNI-D1"
+                        }
+                    ],
+                    "productSpecification": {
+                        "description": "Resource Specification",
+                        "id": "UNID",
+                        "name": "User Network Interface Data"
+                    }
+                },
+                "productOffering": {
+                    "description": "Data network interface connection on NTD",
+                    "id": "UNID",
+                    "name": "User Network Interface Data"
+                },
+                "state": "Running"
+            },
+            {
+                "action": "action",
+                "id": "UNIV",
+                "product": {
+                    "productCharacteristics": [
+                        {
+                            "name": "UNI Type",
+                            "value": "UNI-V"
+                        },
+                        {
+                            "name": "Port Id",
+                            "value": "2"
+                        },
+                        {
+                            "name": "UNI Transient Id",
+                            "value": "UNI-V1"
+                        },
+                        {
+                            "name": "Configuration Mode",
+                            "value": "TR-069"
+                        }
+                    ],
+                    "productSpecification": {
+                        "description": "Resource Specification",
+                        "id": "UNIV",
+                        "name": "User Network Interface Voice"
+                    }
+                },
+                "productOffering": {
+                    "description": "Voice network interface connection on NTD",
+                    "id": "UNIV",
+                    "name": "User Network Interface Voice"
+                },
+                "state": "Running"
+            },
+            {
+                "action": "action",
+                "id": "AVCD",
+                "product": {
+                    "productCharacteristics": [
+                        {
+                            "name": "AVC Type",
+                            "value": "1:1"
+                        },
+                        {
+                            "name": "Bandwidth Profile",
+                            "value": "D12_U1_Mbps_TC4_P"
+                        },
+                        {
+                            "name": "Access Loop Identification",
+                            "value": "CVC012345678903G"
+                        },
+                        {
+                            "name": "NNI CVLAN Id",
+                            "value": "201"
+                        },
+                        {
+                            "name": "Connected to UNI",
+                            "value": "UNI-D1"
+                        }
+                    ],
+                    "productSpecification": {
+                        "description": "Service Specification",
+                        "id": "AVCD",
+                        "name": "Access Virtual Circuit Data"
+                    }
+                },
+                "productOffering": {
+                    "description": "Logical Ethernet Virtual Circuit (EVC), operating across the PON access network between an NNI and a single UNI.",
+                    "id": "AVCD",
+                    "name": "Access Virtual Circuit Data"
+                },
+                "state": "Running"
+            },
+            {
+                "action": "action",
+                "id": "AVCV",
+                "product": {
+                    "productCharacteristics": [
+                        {
+                            "name": "AVC Type",
+                            "value": "N:1"
+                        },
+                        {
+                            "name": "Bandwidth Profile",
+                            "value": "D0.15_U0.15_Mbps_TC1_C"
+                        },
+                        {
+                            "name": "Connected to UNI",
+                            "value": "UNI-V1"
+                        }
+                    ],
+                    "productSpecification": {
+                        "description": "Service Specification",
+                        "id": "AVCV",
+                        "name": "Access Virtual Circuit Voice"
+                    }
+                },
+                "productOffering": {
+                    "description": "Logical Ethernet Virtual Circuit (EVC), operating across the PON access network between an NNI and a single UNI.",
+                    "id": "AVCV",
+                    "name": "Access Virtual Circuit Voice"
+                },
+                "state": "Running"
+            }
+        ],
+        "relatedParties": {
+            "reference": "reference",
+            "role": "role"
+        },
+        "requestedCompletionDate": "2013-10-18T00:00:00Z",
+        "status": "CLOSED_COMPLETED",
+        "type": "Wholesale Network Access"
+    },
+    "eventType": "OrderStatusChangedNotification",
+    "id": "408",
+    "reason": "reason"
+}

@@ -38,6 +38,8 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(tmf.org.dsmapi.hub.service.HubFacadeREST.class);
+        resources.add(tmf.org.dsmapi.ordering.service.AdminFacadeREST.class);
+        resources.add(tmf.org.dsmapi.ordering.service.JacksonConfigurator.class);
         resources.add(tmf.org.dsmapi.ordering.service.ProductOrderFacadeREST.class);
     }
     
