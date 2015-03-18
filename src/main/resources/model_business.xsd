@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace='http://orange.com/api/productOrdering/tmf/v2/model/business' attributeFormDefault='unqualified' elementFormDefault='qualified' xmlns='http://orange.com/api/productOrdering/tmf/v2/model/business' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+  <xsd:annotation id='sidTag'>
+    <xsd:appinfo></xsd:appinfo>
+  </xsd:annotation>
+  <xsd:element name='ProductOrder' type='ProductOrder' />
+  <xsd:element name='Note' type='Note' />
+  <xsd:element name='RelatedParty' type='RelatedParty' />
+  <xsd:element name='OrderItem' type='OrderItem' />
+  <xsd:element name='BillingAccount' type='BillingAccount' />
+  <xsd:element name='ProductOffering' type='ProductOffering' />
+  <xsd:element name='Place' type='Place' />
+  <xsd:element name='Product' type='Product' />
+  <xsd:element name='ProductCharacteristic' type='ProductCharacteristic' />
+  <xsd:element name='ProductRelationship' type='ProductRelationship' />
+  <xsd:complexType name='ProductOrder'>
+    <xsd:sequence minOccurs='1' maxOccurs='1'>
+      <xsd:element name='id' type='xsd:long' minOccurs='0' />
+      <xsd:element name='href' type='xsd:string' minOccurs='0' />
+      <xsd:element name='externalId' type='xsd:string' minOccurs='0' />
+      <xsd:element name='priority' type='xsd:string' minOccurs='0' />
+      <xsd:element name='description' type='xsd:string' minOccurs='0' />
+      <xsd:element name='category' type='xsd:string' minOccurs='0' />
+      <xsd:element name='state' type='State' minOccurs='0' />
+      <xsd:element name='orderDate' type='xsd:dateTime' minOccurs='0' />
+      <xsd:element name='completionDate' type='xsd:dateTime' minOccurs='0' />
+      <xsd:element name='requestedStartDate' type='xsd:dateTime' minOccurs='0' />
+      <xsd:element name='requestedCompletionDate' type='xsd:dateTime' minOccurs='0' />
+      <xsd:element name='expectedCompletionDate' type='xsd:dateTime' minOccurs='0' />
+      <xsd:element name='notificationContact' type='xsd:string' minOccurs='0' />
+      <xsd:element name='note' type='Note' minOccurs='0' maxOccurs='unbounded' />
+      <xsd:element name='relatedParty' type='RelatedParty' minOccurs='0' maxOccurs='unbounded' />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name='Note'>
+    <xsd:sequence minOccurs='1' maxOccurs='1'>
+      <xsd:element name='text' type='xsd:string' minOccurs='0' />
+      <xsd:element name='date' type='xsd:dateTime' minOccurs='0' />
+      <xsd:element name='author' type='xsd:string' minOccurs='0' />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name='RelatedParty'>
+    <xsd:sequence minOccurs='1' maxOccurs='1'>
+      <xsd:element name='role' type='xsd:string' minOccurs='0' maxOccurs='unbounded' />
+      <xsd:element name='id' type='xsd:string' minOccurs='0' />
+      <xsd:element name='href' type='xsd:string' minOccurs='0' />
+      <xsd:element name='name' type='xsd:string' minOccurs='0' />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name='OrderItem'>
+    <xsd:sequence minOccurs='1' maxOccurs='1'>
+      <xsd:element name='id' type='xsd:string' minOccurs='0' />
+      <xsd:element name='action' type='xsd:string' minOccurs='0' />
+      <xsd:element name='state' type='State' minOccurs='0' />
+      <xsd:element name='billingAccount' type='BillingAccount' minOccurs='0' maxOccurs='unbounded' />
+      <xsd:element name='appointment' type='xsd:string' minOccurs='0' />
+      <xsd:element name='productOffering' type='ProductOffering' minOccurs='0' />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name='BillingAccount'>
+    <xsd:sequence minOccurs='1' maxOccurs='1'>
+      <xsd:element name='id' type='xsd:string' minOccurs='0' />
+      <xsd:element name='href' type='xsd:string' minOccurs='0' />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name='ProductOffering'>
+    <xsd:sequence minOccurs='1' maxOccurs='1'>
+      <xsd:element name='id' type='xsd:string' minOccurs='0' />
+      <xsd:element name='href' type='xsd:string' minOccurs='0' />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name='Place'>
+    <xsd:sequence minOccurs='1' maxOccurs='1'>
+      <xsd:element name='href' type='xsd:string' minOccurs='0' />
+      <xsd:element name='role' type='xsd:string' minOccurs='0' />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name='Product'>
+    <xsd:sequence minOccurs='1' maxOccurs='1'>
+      <xsd:element name='place' type='Place' minOccurs='0' />
+      <xsd:element name='characteristic' type='ProductCharacteristic' minOccurs='0' maxOccurs='unbounded' />
+      <xsd:element name='relatedParty' type='RelatedParty' minOccurs='0' maxOccurs='unbounded' />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name='ProductCharacteristic'>
+    <xsd:sequence minOccurs='1' maxOccurs='1'>
+      <xsd:element name='name' type='xsd:string' minOccurs='0' />
+      <xsd:element name='value' type='xsd:string' minOccurs='0' />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name='ProductRelationship'>
+    <xsd:sequence minOccurs='1' maxOccurs='1'>
+      <xsd:element name='type' type='ProductRelationShipType' minOccurs='0' />
+      <xsd:element name='product' type='Product' minOccurs='0' />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name='State'>
+    <xsd:restriction base='xsd:string'>
+      <xsd:enumeration value='Acknowledged'>
+        <xsd:annotation />
+      </xsd:enumeration>
+      <xsd:enumeration value='InProgress'>
+        <xsd:annotation />
+      </xsd:enumeration>
+      <xsd:enumeration value='Cancelled'>
+        <xsd:annotation />
+      </xsd:enumeration>
+      <xsd:enumeration value='Completed'>
+        <xsd:annotation />
+      </xsd:enumeration>
+      <xsd:enumeration value='Rejected'>
+        <xsd:annotation />
+      </xsd:enumeration>
+      <xsd:enumeration value='Pending'>
+        <xsd:annotation />
+      </xsd:enumeration>
+      <xsd:enumeration value='Held'>
+        <xsd:annotation />
+      </xsd:enumeration>
+      <xsd:enumeration value='Failed'>
+        <xsd:annotation />
+      </xsd:enumeration>
+      <xsd:enumeration value='Partial'>
+        <xsd:annotation />
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name='ProductRelationShipType'>
+    <xsd:restriction base='xsd:string'>
+      <xsd:enumeration value='reliesOn'>
+        <xsd:annotation />
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>
