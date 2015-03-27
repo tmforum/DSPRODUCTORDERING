@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,7 +21,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import org.codehaus.jackson.node.ObjectNode;
 import org.tmf.dsmapi.commons.exceptions.BadUsageException;
+import org.tmf.dsmapi.commons.exceptions.ExceptionType;
 import org.tmf.dsmapi.commons.exceptions.UnknownResourceException;
+import org.tmf.dsmapi.commons.jaxrs.PATCH;
 import org.tmf.dsmapi.commons.utils.Jackson;
 import org.tmf.dsmapi.commons.utils.URIParser;
 import org.tmf.dsmapi.productOrder.event.EventPublisherLocal;
@@ -46,7 +49,7 @@ public class ProductOrderResource {
     @Produces({"application/json"})
     public Response create(ProductOrder entity) throws BadUsageException {
         productOrderingManagementFacade.create(entity);
-        publisher.createNotification(entity, "New ProductOrder", new Date());
+        publisher.createNotification(entity, new Date());
         // 201
         Response response = Response.status(Response.Status.CREATED).entity(entity).build();
         return response;
@@ -132,15 +135,18 @@ public class ProductOrderResource {
         return response;
     }
 
-
-
-
-    @GET
-    @Path("proto")
+    @PATCH
+    @Path("{id}")
+    @Consumes({"application/json"})
     @Produces({"application/json"})
-    public ProductOrder proto() {
-        ProductOrder productOrderingManagement = new ProductOrder();
+    public Response patch(@PathParam("id") long id, ProductOrder partialProduct) throws BadUsageException, UnknownResourceException {
+        Response response = null;
+        ProductOrder currentProduct = productOrderingManagementFacade.updateAttributs(id, partialProduct);
+        
+        // 201 OK + location
+        response = Response.status(Response.Status.CREATED).entity(currentProduct).build();
 
-        return productOrderingManagement;
+        return response;
     }
+
 }

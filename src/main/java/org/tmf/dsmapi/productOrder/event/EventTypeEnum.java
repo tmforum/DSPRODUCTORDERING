@@ -9,7 +9,8 @@ public enum EventTypeEnum {
     ProductOrderCreationNotification("ProductOrderCreationNotification"),
     ProductOrderUpdateNotification("ProductOrderUpdateNotification"),
     ProductOrderDeletionNotification("ProductOrderDeletionNotification"),
-    ProductOrderValueChangeNotification("ProductOrderValueChangeNotification");
+    ProductOrderValueChangeNotification("ProductOrderValueChangeNotification"),
+    ProductOrderStatutChangeNotification("ProductOrderStatutChangeNotification");
 
     private String text;
 

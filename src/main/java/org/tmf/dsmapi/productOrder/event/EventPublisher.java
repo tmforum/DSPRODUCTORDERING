@@ -55,44 +55,50 @@ public class EventPublisher implements EventPublisherLocal {
 
     @Override
     
-    public void createNotification(ProductOrder bean, String reason, Date date) {
+    public void createNotification(ProductOrder bean, Date date) {
       
         Event event = new Event();
-        event.setResource(bean);
-        event.setDate(date);
-        event.setReason(reason);
+        event.setEventTime(date);
+        event.setEvent(bean);
         event.setEventType(EventTypeEnum.ProductOrderCreationNotification);
         publish(event);
 
     }
 
     @Override
-    public void deletionNotification(ProductOrder bean, String reason, Date date) {
+    public void deletionNotification(ProductOrder bean, Date date) {
         Event event = new Event();
-        event.setResource(bean);
-        event.setDate(date);
-        event.setReason(reason);
+        event.setEventTime(date);
+        event.setEvent(bean);
         event.setEventType(EventTypeEnum.ProductOrderDeletionNotification);
         publish(event);
     }
 	
     @Override
-    public void updateNotification(ProductOrder bean, String reason, Date date) {
+    public void updateNotification(ProductOrder bean, Date date) {
         Event event = new Event();
-        event.setResource(bean);
-        event.setDate(date);
-        event.setReason(reason);
+        event.setEventTime(date);
+        event.setEvent(bean);
         event.setEventType(EventTypeEnum.ProductOrderUpdateNotification);
         publish(event);
     }
 
     @Override
-    public void valueChangedNotification(ProductOrder bean, String reason, Date date) {
+    public void valueChangedNotification(ProductOrder bean, Date date) {
         Event event = new Event();
-        event.setResource(bean);
-        event.setDate(date);
-        event.setReason(reason);
+        event.setEventTime(date);
+        event.setEvent(bean);
         event.setEventType(EventTypeEnum.ProductOrderValueChangeNotification);
         publish(event);
     }
+
+    @Override
+    public void statusChangedNotification(ProductOrder bean, Date date) {
+        Event event = new Event();
+        event.setEventTime(date);
+        event.setEvent(bean);
+        event.setEventType(EventTypeEnum.ProductOrderStatutChangeNotification);
+        publish(event);
+    }
+
 }

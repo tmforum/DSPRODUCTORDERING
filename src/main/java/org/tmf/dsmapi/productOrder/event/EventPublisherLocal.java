@@ -21,7 +21,7 @@ public interface EventPublisherLocal {
      * @param reason the related reason
      * @param date the creation date
      */
-    public void createNotification(ProductOrder bean, String reason, Date date);
+    public void createNotification(ProductOrder bean, Date date);
 
     /**
      *
@@ -30,7 +30,7 @@ public interface EventPublisherLocal {
      * @param reason the reason of the deletion
      * @param date the deletion date
      */
-    public void deletionNotification(ProductOrder bean, String reason, Date date);
+    public void deletionNotification(ProductOrder bean, Date date);
 
     /**
      *
@@ -39,7 +39,7 @@ public interface EventPublisherLocal {
      * @param reason the reason it has been updated for
      * @param date the update date
      */
-    public void updateNotification(ProductOrder bean, String reason, Date date);
+    public void updateNotification(ProductOrder bean, Date date);
 
     /**
      *
@@ -48,5 +48,15 @@ public interface EventPublisherLocal {
      * @param reason the reason it was changed
      * @param date the change date
      */
-    public void valueChangedNotification(ProductOrder bean, String reason, Date date);
+    public void valueChangedNotification(ProductOrder bean, Date date);
+
+    /**
+     *
+     * StatusChangedNotification
+     * @param bean the bean which has been updated
+     * @param reason the reason it has been updated for
+     * @param date the update date
+     */
+    public void statusChangedNotification(ProductOrder bean, Date date);
+
 }

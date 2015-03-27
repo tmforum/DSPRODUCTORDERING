@@ -31,22 +31,23 @@ import org.tmf.dsmapi.productOrder.model.ProductOrder;
 @XmlRootElement
 @Entity
 @Table(name="Event_ProductOrder")
-@JsonPropertyOrder(value = {"event", "reason", "date", "eventType"})
+@JsonPropertyOrder(value = {"id", "eventTime", "eventType", "event"})
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Event implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonIgnore
+//    @JsonIgnore
     private String id;
-    private String reason;
+
     @Temporal(TemporalType.TIMESTAMP)
     @JsonSerialize(using = CustomJsonDateSerializer.class)
-    private Date dateEvent;
-    @OneToOne (cascade=CascadeType.MERGE)
-    private ProductOrder resource; //check for object
+    private Date eventTime;
+
     @Enumerated(value = EnumType.STRING)
     private EventTypeEnum eventType;
+
+    private ProductOrder event; //check for object
 
     public String getId() {
         return id;
@@ -54,6 +55,14 @@ public class Event implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Date getEventTime() {
+        return eventTime;
+    }
+
+    public void setEventTime(Date eventTime) {
+        this.eventTime = eventTime;
     }
 
     public EventTypeEnum getEventType() {
@@ -64,32 +73,16 @@ public class Event implements Serializable {
         this.eventType = eventType;
     }
 
-    public String getReason() {
-        return reason;
+    public ProductOrder getEvent() {
+        return event;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
-    public Date getDate() {
-        return dateEvent;
-    }
-
-    public void setDate(Date date) {
-        this.dateEvent = date;
-    }
-
-    public ProductOrder getResource() {
-        return resource;
-    }
-
-    public void setResource(ProductOrder resource) {
-        this.resource = resource;
+    public void setEvent(ProductOrder event) {
+        this.event = event;
     }
 
     @Override
     public String toString() {
-        return "Event{" + "id=" + id + ", eventType=" + eventType + ", reason=" + reason + ", dateEvent=" + dateEvent + ", resource=" + resource + "}";
+        return "Event{" + "id=" + id + ", eventTime=" + eventTime + ", eventType=" + eventType + ", event=" + event + '}';
     }
 }

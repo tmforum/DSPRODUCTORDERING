@@ -62,7 +62,7 @@ public class AdminResource {
         try {
             affectedRows = productOrderingManagementFacade.create(entities);
             for (ProductOrder entitie : entities) {
-                publisher.createNotification(entitie, "productOrderingManagement created", new Date());
+                publisher.createNotification(entitie, new Date());
             }
         } catch (BadUsageException e) {
             return Response.status(Response.Status.BAD_REQUEST.getStatusCode()).build();
@@ -88,7 +88,7 @@ public class AdminResource {
         if (productOrderingManagement != null) {
             entity.setId(id);
             productOrderingManagementFacade.edit(entity);
-            publisher.valueChangedNotification(entity, "ProductOrder modified", new Date());
+            publisher.valueChangedNotification(entity, new Date());
             // 201 OK + location
             response = Response.status(Response.Status.CREATED).entity(entity).build();
 
@@ -141,7 +141,7 @@ public class AdminResource {
             ProductOrder entity = productOrderingManagementFacade.find(id);
 
             // Event deletion
-            publisher.deletionNotification(entity, "ProductOrder Deleted", new Date());
+            publisher.deletionNotification(entity, new Date());
             try {
                 //Pause for 4 seconds to finish notification
                 Thread.sleep(4000);
@@ -151,7 +151,7 @@ public class AdminResource {
             // remove event(s) binding to the resource
             List<Event> events = eventFacade.findAll();
             for (Event event : events) {
-                if (event.getResource().getId().equals(id)) {
+                if (event.getEvent().getId().equals(id)) {
                     eventFacade.remove(event.getId());
                 }
             }
@@ -203,7 +203,7 @@ public class AdminResource {
         int previousRows = eventFacade.count();
         List<Event> events = eventFacade.findAll();
         for (Event event : events) {
-            if (event.getResource().getId().equals(id)) {
+            if (event.getEvent().getId().equals(id)) {
                 eventFacade.remove(event.getId());
 
             }

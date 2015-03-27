@@ -4,6 +4,7 @@
  */
 package org.tmf.dsmapi.commons.utils;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.codehaus.jackson.JsonNode;
@@ -43,13 +44,38 @@ public class BeanUtils {
         }
     }
     
-    /**
-     *
-     * @param bean
-     * @param patchBean
-     * @param node
-     */
-    public static void patch(Object bean, Object patch, JsonNode node) {
+    public static boolean patch(Object bean, Object patch, JsonNode node) {
+        String name;
+        JsonNode child;
+        Object value;
+        Object patchValue;
+        Iterator<String> it = node.getFieldNames();
+        boolean isModified=false;
+        while (it.hasNext()) {
+            name = it.next();
+            patchValue = BeanUtils.getNestedProperty(patch, name);
+            child = node.get(name);
+            if (null != patchValue) {
+                if (child.isArray()) {
+                    if (!((ArrayList) patchValue).isEmpty()) {
+                        value = BeanUtils.getNestedProperty(bean, name);
+                        patch(value, patchValue, child);
+                        BeanUtils.setNestedProperty(bean, name, patchValue);
+                        isModified=true;
+                    }
+                } else {
+                    value = BeanUtils.getNestedProperty(bean, name);
+                    patch(value, patchValue, child);
+                    BeanUtils.setNestedProperty(bean, name, patchValue);
+                    isModified=true;
+                }
+            }
+        }
+        return isModified;
+    }
+
+    public static boolean verify(Object patch, JsonNode node, String attribut) {
+        boolean find = false;
         String name;
         JsonNode child;
         Object value;
@@ -59,17 +85,25 @@ public class BeanUtils {
             name = it.next();
             patchValue = BeanUtils.getNestedProperty(patch, name);
             child = node.get(name);
-            if (child.isObject()) {
-                value = BeanUtils.getNestedProperty(bean, name);
-                if (value != null) {
-                    patch(value, patchValue, child);
-                    BeanUtils.setNestedProperty(bean, name, value);
-                } else {
-                    BeanUtils.setNestedProperty(bean, name, patchValue);
+            if (child.isArray()) {
+                if (!((ArrayList) patchValue).isEmpty()) {
+                    if (name.equalsIgnoreCase(attribut)) {
+                        find = true;
+                        break;
+                    }
+//                    value = BeanUtils.getNestedProperty(patch, name);
+//                    verify(value, child, attribut);
                 }
             } else {
-                BeanUtils.setNestedProperty(bean, name, patchValue);
+//                Logger.getLogger("VERIFY").log(Level.INFO, "NAME : " + name);
+//                Logger.getLogger("VERIFY").log(Level.INFO, "CHILD : " + child);
+                if (name.equalsIgnoreCase(attribut)) {
+                    find = true;
+                    break;
+                }
             }
         }
-    }    
+        return find;
+    }
+
 }
