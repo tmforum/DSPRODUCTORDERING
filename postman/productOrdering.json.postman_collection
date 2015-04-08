@@ -142,7 +142,7 @@
 			"url": "http://{{Host}}/DSPRODUCTORDERING/api/productOrdering/v2/productOrder/:id",
 			"preRequestScript": "",
 			"pathVariables": {
-				"id": "1"
+				"id": "2"
 			},
 			"method": "PATCH",
 			"data": [],
@@ -151,13 +151,13 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1427471203780,
+			"time": 1428045949552,
 			"name": "/productOrder",
 			"description": "partial update of product order",
 			"collectionId": "14341c91-f1dd-62d1-de58-b4ffbcbdf901",
 			"responses": [],
 			"synced": false,
-			"rawModeData": "{\n    \"externalId\": \"1\", \n    \"priority\": \"1\", \n    \"description\": \"order description PATCHED\", \n    \"state\": \"InProgress\" \n}"
+			"rawModeData": "{   \r\n    \"externalId\":\"2\",\r\n    \"state\":\"Pending\",\r\n    \"priority\":\"4\",\r\n    \"description\":\"reference implementation description\",\r\n    \"category\":\"uncategorized\",\r\n    \"requestedStartDate\":\"2015-04-01T16:42:23.0Z\",\r\n    \"requestedCompletionDate\":\"2015-04-03T16:42:23.0Z\",\r\n    \"notificationContact\":\"Mr Brun\",\r\n    \"note\":[\r\n      {\r\n         \"text\":\"A free text detailing the note PATCHED\"\r\n      }\r\n   ],\r\n   \"orderItem\":[\r\n      {\r\n         \"id\":\"1\",\r\n         \"action\":\"add\",\r\n         \"billingAccount\":[{\r\n               \"id\":\"1789\",\r\n               \"href\":\"http://serverlocation:port/billingManagement/billingAccount/1789\"\r\n         }],\r\n         \"productOffering\":{\r\n            \"id\":\"42\",\r\n            \"href\":\"http: //serverlocation: port/catalogManagement/productOffering/42\"\r\n         },\r\n         \"product\":{\r\n            \"productCharacteristic\":[\r\n               {\r\n                  \"name\":\"Colour\",\r\n                  \"value\":\"PATCHED\"\r\n               },\r\n               {\r\n                  \"name\":\"Memory\",\r\n                  \"value\":\"32\"\r\n               }\r\n            ]\r\n         }\r\n      },\r\n      {\r\n         \"id\":\"2\",\r\n         \"action\":\"modify\",\r\n         \"product\":{\r\n            \"id\":\"456\",\r\n            \"href\":\"http: //serverlocation: port/inventoryManagement/product/456\",\r\n            \"relatedParty\":[\r\n               {\r\n                  \"role\":\"user\",\r\n                  \"id\":\"5667443\",\r\n                  \"href\":\"http://serverlocation:port/partyManagement/user/5667443\",\r\n                  \"name\":\"Jimmy Doe\"\r\n               }\r\n            ]\r\n         }\r\n      }\r\n   ]\r\n}\r\n"
 		},
 		{
 			"id": "2540951a-376b-3aff-22d1-2c096b726319",
@@ -275,13 +275,13 @@
 			"tests": "",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1427467464455,
+			"time": 1428045199561,
 			"name": "/productOrder",
 			"description": "total update of product order",
 			"collectionId": "14341c91-f1dd-62d1-de58-b4ffbcbdf901",
 			"responses": [],
 			"synced": false,
-			"rawModeData": "{\n    \"externalId\": \"1\", \n    \"priority\": \"0\", \n    \"description\": \"order description\", \n    \"category\": \"residential\", \n    \"state\": \"Acknowledged\", \n    \"orderDate\": \"2015-03-10T16:42:23-04:00\",\n    \"requestedStartDate\": \"2013-03-11T16:42:23-04:00\", \n    \"requestedCompletionDate\": \"2013-03-31T16:42:23-04:00\", \n    \"expectedCompletionDate\": \"2013-03-31T16:42:23-04:00\", \n    \"notificationContact\": \"max.dupont@orange.fr\"\n}"
+			"rawModeData": "{   \r\n    \"externalId\":\"2\",\r\n    \"state\":\"Acknowledged\",\r\n    \"priority\":\"4\",\r\n    \"description\":\"reference implementation description\",\r\n    \"category\":\"uncategorized\",\r\n    \"requestedStartDate\":\"2015-04-01T16:42:23.0Z\",\r\n    \"requestedCompletionDate\":\"2015-04-03T16:42:23.0Z\",\r\n    \"notificationContact\":\"Mr Brun\",\r\n    \"note\":[\r\n      {\r\n         \"text\":\"A free text detailing the note\"\r\n      }\r\n   ],\r\n   \"relatedParty\":[\r\n      {\r\n         \"role\":\"customer\",\r\n         \"id\":\"345221\",\r\n         \"href\":\"http://serverlocation:port/partyManagement/customer/345221\",\r\n         \"name\":\"John Doe\"\r\n      },\r\n      {\r\n         \"role\":\"seller\",\r\n         \"id\":\"4563\",\r\n         \"href\":\"http://serverlocation:port/partnerManagement/partner/4563\"\r\n      }\r\n   ],\r\n   \"orderItem\":[\r\n      {\r\n         \"id\":\"1\",\r\n         \"action\":\"add\",\r\n         \"billingAccount\":[{\r\n               \"id\":\"1789\",\r\n               \"href\":\"http://serverlocation:port/billingManagement/billingAccount/1789\"\r\n         }],\r\n         \"productOffering\":{\r\n            \"id\":\"42\",\r\n            \"href\":\"http: //serverlocation: port/catalogManagement/productOffering/42\"\r\n         },\r\n         \"product\":{\r\n            \"productCharacteristic\":[\r\n               {\r\n                  \"name\":\"Colour\",\r\n                  \"value\":\"White\"\r\n               },\r\n               {\r\n                  \"name\":\"Memory\",\r\n                  \"value\":\"16\"\r\n               }\r\n            ]\r\n         }\r\n      },\r\n      {\r\n         \"id\":\"2\",\r\n         \"action\":\"modify\",\r\n         \"product\":{\r\n            \"id\":\"456\",\r\n            \"href\":\"http: //serverlocation: port/inventoryManagement/product/456\",\r\n            \"relatedParty\":[\r\n               {\r\n                  \"role\":\"user\",\r\n                  \"id\":\"5667443\",\r\n                  \"href\":\"http://serverlocation:port/partyManagement/user/5667443\",\r\n                  \"name\":\"Jimmy Doe\"\r\n               }\r\n            ]\r\n         }\r\n      },\r\n      {\r\n         \"id\":\"3\",\r\n         \"action\":\"delete\",\r\n         \"product\":{\r\n            \"id\":\"456\",\r\n            \"href\":\"http: //serverlocation: port/inventoryManagement/product/456\"\r\n         }\r\n      }\r\n   ]\r\n}\r\n"
 		},
 		{
 			"id": "8962765b-3bc9-8729-a634-8b6373da8277",

@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -26,6 +27,8 @@ import org.tmf.dsmapi.commons.exceptions.UnknownResourceException;
 import org.tmf.dsmapi.commons.jaxrs.PATCH;
 import org.tmf.dsmapi.commons.utils.Jackson;
 import org.tmf.dsmapi.commons.utils.URIParser;
+import org.tmf.dsmapi.productOrder.event.Event;
+import org.tmf.dsmapi.productOrder.event.EventFacade;
 import org.tmf.dsmapi.productOrder.event.EventPublisherLocal;
 import org.tmf.dsmapi.productOrder.model.ProductOrder;
 
@@ -35,6 +38,8 @@ public class ProductOrderResource {
 
     @EJB
     ProductOrderFacade productOrderingManagementFacade;
+    @EJB
+    EventFacade eventFacade;
     @EJB
     EventPublisherLocal publisher;
 
@@ -133,6 +138,39 @@ public class ProductOrderResource {
             response = Response.status(Response.Status.NOT_FOUND).build();
         }
         return response;
+    }
+
+    @DELETE
+    @Path("{id}")
+    public Response delete(@PathParam("id") long id) {
+        try {
+            ProductOrder entity = productOrderingManagementFacade.find(id);
+
+            // Event deletion
+            publisher.deletionNotification(entity, new Date());
+            try {
+                //Pause for 4 seconds to finish notification
+                Thread.sleep(4000);
+            } catch (InterruptedException ex) {
+                // Log someting to the console (should never happen)
+            }
+            // remove event(s) binding to the resource
+            List<Event> events = eventFacade.findAll();
+            for (Event event : events) {
+                if (event.getEvent().getId().equals(id)) {
+                    eventFacade.remove(event.getId());
+                }
+            }
+            //remove resource
+            productOrderingManagementFacade.remove(id);
+
+            // 200 
+            Response response = Response.ok(entity).build();
+            return response;
+        } catch (UnknownResourceException ex) {
+            Response response = Response.status(Response.Status.NOT_FOUND).build();
+            return response;
+        }
     }
 
     @PATCH

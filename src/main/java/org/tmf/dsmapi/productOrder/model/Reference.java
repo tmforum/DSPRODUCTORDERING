@@ -26,17 +26,19 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 
 /**
- * <p>Classe Java pour ProductCharacteristic complex type.
+ * <p>Classe Java pour Reference complex type.
  * 
  * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
  * 
  * <pre>
- * &lt;complexType name="ProductCharacteristic">
+ * &lt;complexType name="Reference">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="href" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="value" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="role" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -46,23 +48,79 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ProductCharacteristic", propOrder = {
+@XmlType(name = "Reference", propOrder = {
+    "id",
+    "href",
     "name",
-    "value"
+    "role"
 })
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-@Entity(name = "ProductCharacteristic")
-@Table(name = "PRODUCT_CHARACTERISTIC")
+@Entity(name = "Reference")
+@Table(name = "REFERENCE")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class ProductCharacteristic
+public class Reference
     implements Serializable
 {
 
     private final static long serialVersionUID = 11L;
+    protected String id;
+    protected String href;
     protected String name;
-    protected String value;
+    protected String role;
     @XmlAttribute(name = "Hjid")
     protected Long hjid;
+
+    /**
+     * Obtient la valeur de la propriété id.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    @Basic
+    @Column(name = "ID", length = 255)
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Définit la valeur de la propriété id.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setId(String value) {
+        this.id = value;
+    }
+
+    /**
+     * Obtient la valeur de la propriété href.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    @Basic
+    @Column(name = "HREF", length = 255)
+    public String getHref() {
+        return href;
+    }
+
+    /**
+     * Définit la valeur de la propriété href.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setHref(String value) {
+        this.href = value;
+    }
 
     /**
      * Obtient la valeur de la propriété name.
@@ -91,7 +149,7 @@ public class ProductCharacteristic
     }
 
     /**
-     * Obtient la valeur de la propriété value.
+     * Obtient la valeur de la propriété role.
      * 
      * @return
      *     possible object is
@@ -99,21 +157,21 @@ public class ProductCharacteristic
      *     
      */
     @Basic
-    @Column(name = "VALUE_", length = 255)
-    public String getValue() {
-        return value;
+    @Column(name = "ROLE_", length = 255)
+    public String getRole() {
+        return role;
     }
 
     /**
-     * Définit la valeur de la propriété value.
+     * Définit la valeur de la propriété role.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setValue(String value) {
-        this.value = value;
+    public void setRole(String value) {
+        this.role = value;
     }
 
     /**

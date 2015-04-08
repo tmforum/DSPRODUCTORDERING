@@ -1,3 +1,11 @@
+//
+// Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB), v2.2.7 
+// Voir <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
+// Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source. 
+// Généré le : 2015.04.08 à 03:12:11 PM CEST 
+//
+
+
 package org.tmf.dsmapi.productOrder.model;
 
 import java.io.Serializable;
@@ -31,9 +39,9 @@ import org.tmf.dsmapi.commons.utils.CustomDateTimeAdapter;
 
 
 /**
- * <p>Java class for ProductOrder complex type.
+ * <p>Classe Java pour ProductOrder complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>Le fragment de schéma suivant indique le contenu attendu figurant dans cette classe.
  * 
  * <pre>
  * &lt;complexType name="ProductOrder">
@@ -54,7 +62,8 @@ import org.tmf.dsmapi.commons.utils.CustomDateTimeAdapter;
  *         &lt;element name="expectedCompletionDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="notificationContact" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="note" type="{http://orange.com/api/productOrdering/tmf/v2/model/business}Note" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="relatedParty" type="{http://orange.com/api/productOrdering/tmf/v2/model/business}RelatedParty" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="relatedParty" type="{http://orange.com/api/productOrdering/tmf/v2/model/business}Reference" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="orderItem" type="{http://orange.com/api/productOrdering/tmf/v2/model/business}OrderItem" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -79,7 +88,8 @@ import org.tmf.dsmapi.commons.utils.CustomDateTimeAdapter;
     "expectedCompletionDate",
     "notificationContact",
     "note",
-    "relatedParty"
+    "relatedParty",
+    "orderItem"
 })
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 @Entity(name = "ProductOrder")
@@ -119,10 +129,11 @@ public class ProductOrder
     protected Date expectedCompletionDate;
     protected String notificationContact;
     protected List<Note> note;
-    protected List<RelatedParty> relatedParty;
+    protected List<Reference> relatedParty;
+    protected List<OrderItem> orderItem;
 
     /**
-     * Gets the value of the id property.
+     * Obtient la valeur de la propriété id.
      * 
      * @return
      *     possible object is
@@ -137,7 +148,7 @@ public class ProductOrder
     }
 
     /**
-     * Sets the value of the id property.
+     * Définit la valeur de la propriété id.
      * 
      * @param value
      *     allowed object is
@@ -149,7 +160,7 @@ public class ProductOrder
     }
 
     /**
-     * Gets the value of the href property.
+     * Obtient la valeur de la propriété href.
      * 
      * @return
      *     possible object is
@@ -163,7 +174,7 @@ public class ProductOrder
     }
 
     /**
-     * Sets the value of the href property.
+     * Définit la valeur de la propriété href.
      * 
      * @param value
      *     allowed object is
@@ -175,7 +186,7 @@ public class ProductOrder
     }
 
     /**
-     * Gets the value of the externalId property.
+     * Obtient la valeur de la propriété externalId.
      * 
      * @return
      *     possible object is
@@ -189,7 +200,7 @@ public class ProductOrder
     }
 
     /**
-     * Sets the value of the externalId property.
+     * Définit la valeur de la propriété externalId.
      * 
      * @param value
      *     allowed object is
@@ -201,7 +212,7 @@ public class ProductOrder
     }
 
     /**
-     * Gets the value of the priority property.
+     * Obtient la valeur de la propriété priority.
      * 
      * @return
      *     possible object is
@@ -215,7 +226,7 @@ public class ProductOrder
     }
 
     /**
-     * Sets the value of the priority property.
+     * Définit la valeur de la propriété priority.
      * 
      * @param value
      *     allowed object is
@@ -227,7 +238,7 @@ public class ProductOrder
     }
 
     /**
-     * Gets the value of the description property.
+     * Obtient la valeur de la propriété description.
      * 
      * @return
      *     possible object is
@@ -241,7 +252,7 @@ public class ProductOrder
     }
 
     /**
-     * Sets the value of the description property.
+     * Définit la valeur de la propriété description.
      * 
      * @param value
      *     allowed object is
@@ -253,7 +264,7 @@ public class ProductOrder
     }
 
     /**
-     * Gets the value of the category property.
+     * Obtient la valeur de la propriété category.
      * 
      * @return
      *     possible object is
@@ -267,7 +278,7 @@ public class ProductOrder
     }
 
     /**
-     * Sets the value of the category property.
+     * Définit la valeur de la propriété category.
      * 
      * @param value
      *     allowed object is
@@ -279,7 +290,7 @@ public class ProductOrder
     }
 
     /**
-     * Gets the value of the state property.
+     * Obtient la valeur de la propriété state.
      * 
      * @return
      *     possible object is
@@ -294,7 +305,7 @@ public class ProductOrder
     }
 
     /**
-     * Sets the value of the state property.
+     * Définit la valeur de la propriété state.
      * 
      * @param value
      *     allowed object is
@@ -306,7 +317,7 @@ public class ProductOrder
     }
 
     /**
-     * Gets the value of the orderDate property.
+     * Obtient la valeur de la propriété orderDate.
      * 
      * @return
      *     possible object is
@@ -321,7 +332,7 @@ public class ProductOrder
     }
 
     /**
-     * Sets the value of the orderDate property.
+     * Définit la valeur de la propriété orderDate.
      * 
      * @param value
      *     allowed object is
@@ -333,7 +344,7 @@ public class ProductOrder
     }
 
     /**
-     * Gets the value of the completionDate property.
+     * Obtient la valeur de la propriété completionDate.
      * 
      * @return
      *     possible object is
@@ -348,7 +359,7 @@ public class ProductOrder
     }
 
     /**
-     * Sets the value of the completionDate property.
+     * Définit la valeur de la propriété completionDate.
      * 
      * @param value
      *     allowed object is
@@ -360,7 +371,7 @@ public class ProductOrder
     }
 
     /**
-     * Gets the value of the requestedStartDate property.
+     * Obtient la valeur de la propriété requestedStartDate.
      * 
      * @return
      *     possible object is
@@ -375,7 +386,7 @@ public class ProductOrder
     }
 
     /**
-     * Sets the value of the requestedStartDate property.
+     * Définit la valeur de la propriété requestedStartDate.
      * 
      * @param value
      *     allowed object is
@@ -387,7 +398,7 @@ public class ProductOrder
     }
 
     /**
-     * Gets the value of the requestedCompletionDate property.
+     * Obtient la valeur de la propriété requestedCompletionDate.
      * 
      * @return
      *     possible object is
@@ -402,7 +413,7 @@ public class ProductOrder
     }
 
     /**
-     * Sets the value of the requestedCompletionDate property.
+     * Définit la valeur de la propriété requestedCompletionDate.
      * 
      * @param value
      *     allowed object is
@@ -414,7 +425,7 @@ public class ProductOrder
     }
 
     /**
-     * Gets the value of the expectedCompletionDate property.
+     * Obtient la valeur de la propriété expectedCompletionDate.
      * 
      * @return
      *     possible object is
@@ -429,7 +440,7 @@ public class ProductOrder
     }
 
     /**
-     * Sets the value of the expectedCompletionDate property.
+     * Définit la valeur de la propriété expectedCompletionDate.
      * 
      * @param value
      *     allowed object is
@@ -441,7 +452,7 @@ public class ProductOrder
     }
 
     /**
-     * Gets the value of the notificationContact property.
+     * Obtient la valeur de la propriété notificationContact.
      * 
      * @return
      *     possible object is
@@ -455,7 +466,7 @@ public class ProductOrder
     }
 
     /**
-     * Sets the value of the notificationContact property.
+     * Définit la valeur de la propriété notificationContact.
      * 
      * @param value
      *     allowed object is
@@ -525,17 +536,17 @@ public class ProductOrder
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link RelatedParty }
+     * {@link Reference }
      * 
      * 
      */
-    @OneToMany(targetEntity = RelatedParty.class, cascade = {
+    @OneToMany(targetEntity = Reference.class, cascade = {
         CascadeType.ALL
     })
     @JoinColumn(name = "RELATED_PARTY_PRODUCT_ORDER__0")
-    public List<RelatedParty> getRelatedParty() {
+    public List<Reference> getRelatedParty() {
         if (relatedParty == null) {
-            relatedParty = new ArrayList<RelatedParty>();
+            relatedParty = new ArrayList<Reference>();
         }
         return this.relatedParty;
     }
@@ -544,8 +555,49 @@ public class ProductOrder
      * 
      * 
      */
-    public void setRelatedParty(List<RelatedParty> relatedParty) {
+    public void setRelatedParty(List<Reference> relatedParty) {
         this.relatedParty = relatedParty;
+    }
+
+    /**
+     * Gets the value of the orderItem property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the orderItem property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getOrderItem().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link OrderItem }
+     * 
+     * 
+     */
+    @OneToMany(targetEntity = OrderItem.class, cascade = {
+        CascadeType.ALL
+    })
+    @JoinColumn(name = "ORDER_ITEM_PRODUCT_ORDER_ID")
+    public List<OrderItem> getOrderItem() {
+        if (orderItem == null) {
+            orderItem = new ArrayList<OrderItem>();
+        }
+        return this.orderItem;
+    }
+
+    /**
+     * 
+     * 
+     */
+    public void setOrderItem(List<OrderItem> orderItem) {
+        this.orderItem = orderItem;
     }
 
 }

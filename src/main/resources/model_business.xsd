@@ -5,14 +5,12 @@
   </xsd:annotation>
   <xsd:element name='ProductOrder' type='ProductOrder' />
   <xsd:element name='Note' type='Note' />
-  <xsd:element name='RelatedParty' type='RelatedParty' />
   <xsd:element name='OrderItem' type='OrderItem' />
-  <xsd:element name='BillingAccount' type='BillingAccount' />
-  <xsd:element name='ProductOffering' type='ProductOffering' />
-  <xsd:element name='Place' type='Place' />
   <xsd:element name='Product' type='Product' />
   <xsd:element name='ProductCharacteristic' type='ProductCharacteristic' />
   <xsd:element name='ProductRelationship' type='ProductRelationship' />
+  <xsd:element name='Reference' type='Reference' />
+  <xsd:element name='ProductOffering' type='ProductOffering' />
   <xsd:complexType name='ProductOrder'>
     <xsd:sequence minOccurs='1' maxOccurs='1'>
       <xsd:element name='id' type='xsd:long' minOccurs='0' />
@@ -29,7 +27,8 @@
       <xsd:element name='expectedCompletionDate' type='xsd:dateTime' minOccurs='0' />
       <xsd:element name='notificationContact' type='xsd:string' minOccurs='0' />
       <xsd:element name='note' type='Note' minOccurs='0' maxOccurs='unbounded' />
-      <xsd:element name='relatedParty' type='RelatedParty' minOccurs='0' maxOccurs='unbounded' />
+      <xsd:element name='relatedParty' type='Reference' minOccurs='0' maxOccurs='unbounded' />
+      <xsd:element name='orderItem' type='OrderItem' minOccurs='0' maxOccurs='unbounded' />
     </xsd:sequence>
   </xsd:complexType>
   <xsd:complexType name='Note'>
@@ -39,47 +38,25 @@
       <xsd:element name='author' type='xsd:string' minOccurs='0' />
     </xsd:sequence>
   </xsd:complexType>
-  <xsd:complexType name='RelatedParty'>
-    <xsd:sequence minOccurs='1' maxOccurs='1'>
-      <xsd:element name='role' type='xsd:string' minOccurs='0' maxOccurs='unbounded' />
-      <xsd:element name='id' type='xsd:string' minOccurs='0' />
-      <xsd:element name='href' type='xsd:string' minOccurs='0' />
-      <xsd:element name='name' type='xsd:string' minOccurs='0' />
-    </xsd:sequence>
-  </xsd:complexType>
   <xsd:complexType name='OrderItem'>
     <xsd:sequence minOccurs='1' maxOccurs='1'>
       <xsd:element name='id' type='xsd:string' minOccurs='0' />
       <xsd:element name='action' type='xsd:string' minOccurs='0' />
       <xsd:element name='state' type='State' minOccurs='0' />
-      <xsd:element name='billingAccount' type='BillingAccount' minOccurs='0' maxOccurs='unbounded' />
+      <xsd:element name='billingAccount' type='Reference' minOccurs='0' maxOccurs='unbounded' />
       <xsd:element name='appointment' type='xsd:string' minOccurs='0' />
       <xsd:element name='productOffering' type='ProductOffering' minOccurs='0' />
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name='BillingAccount'>
-    <xsd:sequence minOccurs='1' maxOccurs='1'>
-      <xsd:element name='id' type='xsd:string' minOccurs='0' />
-      <xsd:element name='href' type='xsd:string' minOccurs='0' />
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name='ProductOffering'>
-    <xsd:sequence minOccurs='1' maxOccurs='1'>
-      <xsd:element name='id' type='xsd:string' minOccurs='0' />
-      <xsd:element name='href' type='xsd:string' minOccurs='0' />
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name='Place'>
-    <xsd:sequence minOccurs='1' maxOccurs='1'>
-      <xsd:element name='href' type='xsd:string' minOccurs='0' />
-      <xsd:element name='role' type='xsd:string' minOccurs='0' />
+      <xsd:element name='product' type='Product' minOccurs='0' />
     </xsd:sequence>
   </xsd:complexType>
   <xsd:complexType name='Product'>
     <xsd:sequence minOccurs='1' maxOccurs='1'>
-      <xsd:element name='place' type='Place' minOccurs='0' />
-      <xsd:element name='characteristic' type='ProductCharacteristic' minOccurs='0' maxOccurs='unbounded' />
-      <xsd:element name='relatedParty' type='RelatedParty' minOccurs='0' maxOccurs='unbounded' />
+      <xsd:element name='place' type='Reference' minOccurs='0' />
+      <xsd:element name='productCharacteristic' type='ProductCharacteristic' minOccurs='0' maxOccurs='unbounded' />
+      <xsd:element name='relatedParty' type='Reference' minOccurs='0' maxOccurs='unbounded' />
+      <xsd:element name='productRelationship' type='ProductRelationship' minOccurs='0' maxOccurs='unbounded' />
+      <xsd:element name='id' type='xsd:string' minOccurs='0' />
+      <xsd:element name='href' type='xsd:string' minOccurs='0' />
     </xsd:sequence>
   </xsd:complexType>
   <xsd:complexType name='ProductCharacteristic'>
@@ -92,6 +69,21 @@
     <xsd:sequence minOccurs='1' maxOccurs='1'>
       <xsd:element name='type' type='ProductRelationShipType' minOccurs='0' />
       <xsd:element name='product' type='Product' minOccurs='0' />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name='Reference'>
+    <xsd:sequence minOccurs='1' maxOccurs='1'>
+      <xsd:element name='id' type='xsd:string' minOccurs='0' />
+      <xsd:element name='href' type='xsd:string' minOccurs='0' />
+      <xsd:element name='name' type='xsd:string' minOccurs='0' />
+      <xsd:element name='role' type='xsd:string' minOccurs='0' />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name='ProductOffering'>
+    <xsd:sequence minOccurs='1' maxOccurs='1'>
+      <xsd:element name='id' type='xsd:string' minOccurs='0' />
+      <xsd:element name='href' type='xsd:string' minOccurs='0' />
+      <xsd:element name='bundledProductOffering' type='Reference' minOccurs='0' maxOccurs='unbounded' />
     </xsd:sequence>
   </xsd:complexType>
   <xsd:simpleType name='State'>
@@ -128,6 +120,15 @@
   <xsd:simpleType name='ProductRelationShipType'>
     <xsd:restriction base='xsd:string'>
       <xsd:enumeration value='reliesOn'>
+        <xsd:annotation />
+      </xsd:enumeration>
+      <xsd:enumeration value='bundled'>
+        <xsd:annotation />
+      </xsd:enumeration>
+      <xsd:enumeration value='targets'>
+        <xsd:annotation />
+      </xsd:enumeration>
+      <xsd:enumeration value='isTargeted'>
         <xsd:annotation />
       </xsd:enumeration>
     </xsd:restriction>
