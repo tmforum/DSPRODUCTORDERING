@@ -24,7 +24,7 @@ import org.tmf.dsmapi.productOrder.event.EventPublisherLocal;
 import org.tmf.dsmapi.productOrder.model.ProductOrder;
 
 @Stateless
-@Path("/admin/productOrder")
+@Path("/admin")
 public class AdminResource {
 
     @EJB
@@ -35,6 +35,7 @@ public class AdminResource {
     EventPublisherLocal publisher;
 
     @GET
+    @Path("productOrder")
     @Produces({"application/json"})
     public List<ProductOrder> findAll() {
         return productOrderingManagementFacade.findAll();
@@ -47,6 +48,7 @@ public class AdminResource {
      * @return
      */
     @POST
+    @Path("productOrder")
     @Consumes({"application/json"})
     @Produces({"application/json"})
     public Response post(List<ProductOrder> entities) {
@@ -79,7 +81,7 @@ public class AdminResource {
     }
 
     @PUT
-    @Path("{id}")
+    @Path("productOrder/{id}")
     @Consumes({"application/json"})
     @Produces({"application/json"})
     public Response update(@PathParam("id") long id, ProductOrder entity) throws UnknownResourceException {
@@ -106,6 +108,7 @@ public class AdminResource {
      * @throws org.tmf.dsmapi.commons.exceptions.UnknownResourceException
      */
     @DELETE
+    @Path("productOrder")
     public Report deleteAll() throws UnknownResourceException {
 
         eventFacade.removeAll();
@@ -134,7 +137,7 @@ public class AdminResource {
      * @throws UnknownResourceException
      */
     @DELETE
-    @Path("{id}")
+    @Path("productOrder/{id}")
     public Response delete(@PathParam("id") Long id) throws UnknownResourceException {
         try {
             int previousRows = productOrderingManagementFacade.count();
@@ -225,7 +228,7 @@ public class AdminResource {
      * @return
      */
     @GET
-    @Path("count")
+    @Path("productOrder/count")
     @Produces({"application/json"})
     public Report count() {
         return new Report(productOrderingManagementFacade.count());

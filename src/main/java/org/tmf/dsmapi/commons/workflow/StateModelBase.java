@@ -62,7 +62,7 @@ public abstract class StateModelBase<E extends Enum<E>> implements StateModel<E>
         }
         Transition<E> transition = getTransition(from);
         if (transition.isFinal()) {
-            throw new BadUsageException(ExceptionType.BAD_USAGE_FLOW_TRANSITION, "item is in final state: " + from.toString());
+            BadUsageException e = new BadUsageException(ExceptionType.BAD_USAGE_FLOW_TRANSITION, "item is in final state: " + from.toString());
         }
         if (!transition.isAnAuthorizedTransition(to)) {
             throw new BadUsageException(ExceptionType.BAD_USAGE_FLOW_TRANSITION, "authorized: " + transition.getTo().toString());

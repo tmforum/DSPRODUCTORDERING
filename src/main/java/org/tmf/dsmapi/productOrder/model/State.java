@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonValue;
 
 
@@ -39,6 +40,7 @@ import org.codehaus.jackson.annotate.JsonValue;
  */
 @XmlType(name = "State")
 @XmlEnum
+@JsonIgnoreProperties(ignoreUnknown = true)
 public enum State {
 
     @XmlEnumValue("Initial")
@@ -81,5 +83,10 @@ public enum State {
         }
         throw new IllegalArgumentException(v);
     }
+    
+    @Override
+    public String toString() {
+        return value;
+    }    
 
 }
