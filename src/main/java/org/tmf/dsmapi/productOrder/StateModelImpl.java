@@ -22,31 +22,30 @@ public class StateModelImpl extends StateModelBase<State> {
     @Override
     protected void draw() {
         // First
-        fromFirst(State.INITIAL).to(
-                State.REJECTED,
-                State.ACKNOWLEDGED);
+        fromFirst(State.Initial).to(
+                State.Rejected,
+                State.Acknowledged);
 
         // Somewhere
-        from(State.ACKNOWLEDGED).to(
-                State.IN_PROGRESS);
-        from(State.IN_PROGRESS).to(
-                State.HELD,
-                State.PENDING,
-                State.PARTIAL,
-                State.FAILED,
-                State.COMPLETED);       
-        from(State.HELD).to(
-                State.IN_PROGRESS,
-                State.CANCELLED);
-        from(State.PENDING).to(
-                State.IN_PROGRESS,
-                State.CANCELLED);
+        from(State.Acknowledged).to(
+                State.InProgress);
+        from(State.InProgress).to(
+                State.Held,
+                State.Pending,
+                State.Partial,
+                State.Failed,
+                State.Completed);       
+        from(State.Held).to(
+                State.InProgress,
+                State.Cancelled);
+        from(State.Pending).to(
+                State.InProgress,
+                State.Cancelled);
 
         // Final
-        from(State.COMPLETED);
-        from(State.PARTIAL);
-        from(State.COMPLETED);
-        from(State.REJECTED);
-        from(State.CANCELLED);
+        from(State.Completed);
+        from(State.Partial);
+        from(State.Rejected);
+        from(State.Cancelled);
     }
 }

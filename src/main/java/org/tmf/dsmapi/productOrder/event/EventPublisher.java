@@ -59,8 +59,8 @@ public class EventPublisher implements EventPublisherLocal {
       
         Event event = new Event();
         event.setEventTime(date);
-        event.setEvent(bean);
-        event.setEventType(EventTypeEnum.ProductOrderCreationNotification);
+       event.setResource(bean);
+        event.setEventType(EventTypeEnum.orderCreationNotification);
         publish(event);
 
     }
@@ -69,8 +69,8 @@ public class EventPublisher implements EventPublisherLocal {
     public void deletionNotification(ProductOrder bean, Date date) {
         Event event = new Event();
         event.setEventTime(date);
-        event.setEvent(bean);
-        event.setEventType(EventTypeEnum.ProductOrderDeletionNotification);
+        event.setResource(bean);
+        event.setEventType(EventTypeEnum.orderRemoveNotification);
         publish(event);
     }
 	
@@ -78,7 +78,7 @@ public class EventPublisher implements EventPublisherLocal {
     public void updateNotification(ProductOrder bean, Date date) {
         Event event = new Event();
         event.setEventTime(date);
-        event.setEvent(bean);
+        event.setResource(bean);
         event.setEventType(EventTypeEnum.ProductOrderUpdateNotification);
         publish(event);
     }
@@ -87,8 +87,8 @@ public class EventPublisher implements EventPublisherLocal {
     public void valueChangedNotification(ProductOrder bean, Date date) {
         Event event = new Event();
         event.setEventTime(date);
-        event.setEvent(bean);
-        event.setEventType(EventTypeEnum.ProductOrderValueChangeNotification);
+       event.setResource(bean);
+        event.setEventType(EventTypeEnum.orderValueChangeNotification);
         publish(event);
     }
 
@@ -96,8 +96,8 @@ public class EventPublisher implements EventPublisherLocal {
     public void statusChangedNotification(ProductOrder bean, Date date) {
         Event event = new Event();
         event.setEventTime(date);
-        event.setEvent(bean);
-        event.setEventType(EventTypeEnum.ProductOrderStatutChangeNotification);
+        event.setResource(bean);
+        event.setEventType(EventTypeEnum.orderStateChangeNotification);
         publish(event);
     }
 

@@ -12,7 +12,6 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.annotate.JsonCreator;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonValue;
 
 
@@ -40,29 +39,28 @@ import org.codehaus.jackson.annotate.JsonValue;
  */
 @XmlType(name = "State")
 @XmlEnum
-@JsonIgnoreProperties(ignoreUnknown = true)
 public enum State {
 
     @XmlEnumValue("Initial")
-    INITIAL("Initial"),
+    Initial("Initial"),
     @XmlEnumValue("Acknowledged")
-    ACKNOWLEDGED("Acknowledged"),
+    Acknowledged("Acknowledged"),
     @XmlEnumValue("InProgress")
-    IN_PROGRESS("InProgress"),
+    InProgress("InProgress"),
     @XmlEnumValue("Cancelled")
-    CANCELLED("Cancelled"),
+    Cancelled("Cancelled"),
     @XmlEnumValue("Completed")
-    COMPLETED("Completed"),
+    Completed("Completed"),
     @XmlEnumValue("Rejected")
-    REJECTED("Rejected"),
+    Rejected("Rejected"),
     @XmlEnumValue("Pending")
-    PENDING("Pending"),
+    Pending("Pending"),
     @XmlEnumValue("Held")
-    HELD("Held"),
+    Held("Held"),
     @XmlEnumValue("Failed")
-    FAILED("Failed"),
+    Failed("Failed"),
     @XmlEnumValue("Partial")
-    PARTIAL("Partial");
+    Partial("Partial");
     private final String value;
 
     State(String v) {
@@ -83,10 +81,5 @@ public enum State {
         }
         throw new IllegalArgumentException(v);
     }
-    
-    @Override
-    public String toString() {
-        return value;
-    }    
 
 }

@@ -4,11 +4,12 @@
     <!-- JPA provider class -->
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <!-- JNDI name (datasource) -->
-    <jta-data-source>java:app/jdbc/tmfapi</jta-data-source>
+    <jta-data-source>jdbc/podbv2</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
       <property name="eclipselink.logging.level" value="FINE"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

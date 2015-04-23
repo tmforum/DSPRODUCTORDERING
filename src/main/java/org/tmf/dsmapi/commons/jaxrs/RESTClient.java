@@ -44,21 +44,25 @@ public class RESTClient {
     }
   }
 
-  private Client getJaxrsClient() {
-    if (jaxrsClient == null) {
-      ObjectMapper mapper = new ObjectMapper().configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false).configure(SerializationConfig.Feature.INDENT_OUTPUT, true).configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, true);
-      JacksonJaxbJsonProvider jacksonProvider = new JacksonJaxbJsonProvider();
-      jacksonProvider.setMapper(mapper);
-      ClientConfig config = new ClientConfig().register(new JacksonFeature());
-      //ClientConfig cc = new ClientConfig()
-      //config.register(jacksonProvider);
-      jaxrsClient = ClientBuilder.newClient(config);
-      jaxrsClient.property(ClientProperties.CONNECT_TIMEOUT, 3000);
-      jaxrsClient.property(ClientProperties.READ_TIMEOUT, 3000);
+   private Client getJaxrsClient() {
+        if (jaxrsClient == null) {
+            ObjectMapper mapper = new ObjectMapper().configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false).configure(SerializationConfig.Feature.INDENT_OUTPUT, true).configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, true);
+            JacksonJaxbJsonProvider jacksonProvider = new JacksonJaxbJsonProvider();
+            jacksonProvider.setMapper(mapper);
+            ClientConfig config = new ClientConfig();
+            ClientConfig register = config.register(jacksonProvider);
+            
+            
+           
+           
+            
+            jaxrsClient = ClientBuilder.newClient(config);
+            jaxrsClient.register(JacksonFeature.class);
+            jaxrsClient.property(ClientProperties.CONNECT_TIMEOUT, 3000);
+            jaxrsClient.property(ClientProperties.READ_TIMEOUT, 3000);
+        }
+        return jaxrsClient;
     }
-    return jaxrsClient;
-  }
-
   // In memory caching, webResources and client are thread safe see jersey doc
   private WebTarget getWebResource(String endpointURL) {
     if (!webResources.containsKey(endpointURL)) {

@@ -18,7 +18,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import static org.codehaus.jackson.annotate.JsonAutoDetect.Visibility.ANY;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonPropertyOrder;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.tmf.dsmapi.commons.utils.CustomJsonDateSerializer;
@@ -37,7 +40,7 @@ public class Event implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @JsonIgnore
+    @JsonProperty("eventId")
     private String id;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -47,7 +50,27 @@ public class Event implements Serializable {
     @Enumerated(value = EnumType.STRING)
     private EventTypeEnum eventType;
 
-    private ProductOrder event; //check for object
+    @JsonIgnore
+    private ProductOrder resource; //check for object
+    
+    @JsonAutoDetect(fieldVisibility = ANY)
+    class EventBody {
+        private ProductOrder productOrder;
+        public ProductOrder getProductOrder() {
+            return productOrder;
+        }
+        public EventBody(ProductOrder productOrder) { 
+        this.productOrder = productOrder;
+    }
+    }
+
+  @JsonProperty("event")
+   public EventBody getEvent() {
+       
+       return new EventBody(getResource() );
+   }
+    
+  @JsonIgnore 
 
     public String getId() {
         return id;
@@ -72,17 +95,24 @@ public class Event implements Serializable {
     public void setEventType(EventTypeEnum eventType) {
         this.eventType = eventType;
     }
-
-    public ProductOrder getEvent() {
-        return event;
+    
+    @JsonIgnore
+    public ProductOrder getResource() {
+        
+        
+        return resource;
     }
 
-    public void setEvent(ProductOrder event) {
-        this.event = event;
+    public void setResource(ProductOrder resource) {
+        this.resource = resource;
     }
 
     @Override
     public String toString() {
-        return "Event{" + "id=" + id + ", eventTime=" + eventTime + ", eventType=" + eventType + ", event=" + event + '}';
+        return "Event{" + "id=" + id + ", eventTime=" + eventTime + ", eventType=" + eventType + ", resource=" + resource + '}';
     }
+
+
+    
+    
 }

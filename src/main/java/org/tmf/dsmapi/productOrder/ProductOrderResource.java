@@ -6,6 +6,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -33,7 +35,7 @@ import org.tmf.dsmapi.productOrder.event.EventPublisherLocal;
 import org.tmf.dsmapi.productOrder.model.ProductOrder;
 
 @Stateless
-@Path("/productOrdering/v2/productOrder")
+@Path("productOrder")
 public class ProductOrderResource {
 
     @EJB
@@ -55,8 +57,15 @@ public class ProductOrderResource {
     public Response create(ProductOrder entity) throws BadUsageException {
         productOrderingManagementFacade.create(entity);
         publisher.createNotification(entity, new Date());
-        // 201
-        Response response = Response.status(Response.Status.CREATED).entity(entity).build();
+        
+        ProductOrder productOrderingManagement = null;
+        // 201 BUG NEED TO REFIND TO IGNORE HJID UNKNOWN CAUSE
+        try {
+            productOrderingManagement = productOrderingManagementFacade.find(entity.getId());
+        } catch (UnknownResourceException ex) {
+            Logger.getLogger(ProductOrderResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Response response = Response.status(Response.Status.CREATED).entity(productOrderingManagement).build();
         return response;
     }
 
@@ -157,7 +166,7 @@ public class ProductOrderResource {
             // remove event(s) binding to the resource
             List<Event> events = eventFacade.findAll();
             for (Event event : events) {
-                if (event.getEvent().getId().equals(id)) {
+                if (event.getResource().getId().equals(id)) {
                     eventFacade.remove(event.getId());
                 }
             }

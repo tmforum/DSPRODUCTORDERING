@@ -56,10 +56,16 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.convertValue(partialProduct, JsonNode.class);
         if (BeanUtils.verify(partialProduct, node, "state")) {
+            
+            
             stateModel.checkTransition(currentProduct.getState(), partialProduct.getState());
+            System.out.println("About to publish statusChangedNotification "  );
+            
             publisher.statusChangedNotification(currentProduct, new Date());
-//        } else {
-//            throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS, "state" + " is not found");
+       } else {
+            
+            System.out.println("No State detectd "  );
+            //throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS, "state" + " is not found");
         }
 
         partialProduct.setId(id);

@@ -24,7 +24,7 @@ import org.tmf.dsmapi.productOrder.event.EventPublisherLocal;
 import org.tmf.dsmapi.productOrder.model.ProductOrder;
 
 @Stateless
-@Path("/admin")
+@Path("/admin/productOrder")
 public class AdminResource {
 
     @EJB
@@ -35,7 +35,6 @@ public class AdminResource {
     EventPublisherLocal publisher;
 
     @GET
-    @Path("productOrder")
     @Produces({"application/json"})
     public List<ProductOrder> findAll() {
         return productOrderingManagementFacade.findAll();
@@ -48,7 +47,6 @@ public class AdminResource {
      * @return
      */
     @POST
-    @Path("productOrder")
     @Consumes({"application/json"})
     @Produces({"application/json"})
     public Response post(List<ProductOrder> entities) {
@@ -81,7 +79,7 @@ public class AdminResource {
     }
 
     @PUT
-    @Path("productOrder/{id}")
+    @Path("{id}")
     @Consumes({"application/json"})
     @Produces({"application/json"})
     public Response update(@PathParam("id") long id, ProductOrder entity) throws UnknownResourceException {
@@ -108,7 +106,6 @@ public class AdminResource {
      * @throws org.tmf.dsmapi.commons.exceptions.UnknownResourceException
      */
     @DELETE
-    @Path("productOrder")
     public Report deleteAll() throws UnknownResourceException {
 
         eventFacade.removeAll();
@@ -137,7 +134,7 @@ public class AdminResource {
      * @throws UnknownResourceException
      */
     @DELETE
-    @Path("productOrder/{id}")
+    @Path("{id}")
     public Response delete(@PathParam("id") Long id) throws UnknownResourceException {
         try {
             int previousRows = productOrderingManagementFacade.count();
@@ -154,7 +151,7 @@ public class AdminResource {
             // remove event(s) binding to the resource
             List<Event> events = eventFacade.findAll();
             for (Event event : events) {
-                if (event.getEvent().getId().equals(id)) {
+                if (event.getResource().getId().equals(id)) {
                     eventFacade.remove(event.getId());
                 }
             }
@@ -206,7 +203,7 @@ public class AdminResource {
         int previousRows = eventFacade.count();
         List<Event> events = eventFacade.findAll();
         for (Event event : events) {
-            if (event.getEvent().getId().equals(id)) {
+            if (event.getResource().getId().equals(id)) {
                 eventFacade.remove(event.getId());
 
             }
@@ -228,7 +225,7 @@ public class AdminResource {
      * @return
      */
     @GET
-    @Path("productOrder/count")
+    @Path("count")
     @Produces({"application/json"})
     public Report count() {
         return new Report(productOrderingManagementFacade.count());
