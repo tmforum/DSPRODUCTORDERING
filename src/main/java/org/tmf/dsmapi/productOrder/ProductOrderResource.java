@@ -14,7 +14,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -24,7 +23,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import org.codehaus.jackson.node.ObjectNode;
 import org.tmf.dsmapi.commons.exceptions.BadUsageException;
-import org.tmf.dsmapi.commons.exceptions.ExceptionType;
 import org.tmf.dsmapi.commons.exceptions.UnknownResourceException;
 import org.tmf.dsmapi.commons.jaxrs.PATCH;
 import org.tmf.dsmapi.commons.utils.Jackson;
@@ -54,8 +52,11 @@ public class ProductOrderResource {
     @POST
     @Consumes({"application/json"})
     @Produces({"application/json"})
-    public Response create(ProductOrder entity) throws BadUsageException {
+    public Response create(ProductOrder entity) throws BadUsageException, UnknownResourceException {
+        productOrderingManagementFacade.checkCreation(entity);
         productOrderingManagementFacade.create(entity);
+        entity.setHref("href/".concat(Long.toString(entity.getId())));
+        productOrderingManagementFacade.edit(entity);
         publisher.createNotification(entity, new Date());
         
         ProductOrder productOrderingManagement = null;
