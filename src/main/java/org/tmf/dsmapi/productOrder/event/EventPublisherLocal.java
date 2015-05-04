@@ -30,33 +30,33 @@ public interface EventPublisherLocal {
      * @param reason the reason of the deletion
      * @param date the deletion date
      */
-    public void deletionNotification(ProductOrder bean, Date date);
+    public void removeNotification(ProductOrder bean, Date date);
 
     /**
      *
-     * UpdateNotification (PATCH)
+     * orderInformationRequiredNotification 
      * @param bean the bean which has been updated
      * @param reason the reason it has been updated for
      * @param date the update date
      */
-    public void updateNotification(ProductOrder bean, Date date);
+    public void orderInformationRequiredNotification(ProductOrder bean, Date date);
 
     /**
      *
-     * ValueChangeNotification
+     * ValueChangeNotification (PATCH)
      * @param bean the bean which has been changed
      * @param reason the reason it was changed
      * @param date the change date
      */
-    public void valueChangedNotification(ProductOrder bean, Date date);
+    public void valueChangeNotification(ProductOrder bean, Date date);
 
     /**
      *
-     * StatusChangedNotification
+     * StatusChangeNotification
      * @param bean the bean which has been updated
      * @param reason the reason it has been updated for
      * @param date the update date
      */
-    public void statusChangedNotification(ProductOrder bean, Date date);
+    public void stateChangeNotification(ProductOrder bean, Date date);
 
 }

@@ -13,11 +13,13 @@ import org.tmf.dsmapi.commons.exceptions.ExceptionType;
 import org.tmf.dsmapi.commons.exceptions.UnknownResourceException;
 import org.tmf.dsmapi.commons.facade.AbstractFacade;
 import org.tmf.dsmapi.commons.utils.BeanUtils;
+import org.tmf.dsmapi.commons.utils.TMFDate;
 import org.tmf.dsmapi.productOrder.event.EventPublisherLocal;
 import org.tmf.dsmapi.productOrder.model.Note;
 import org.tmf.dsmapi.productOrder.model.OrderItem;
 import org.tmf.dsmapi.productOrder.model.ProductOrder;
 import org.tmf.dsmapi.productOrder.model.Reference;
+import org.tmf.dsmapi.productOrder.model.State;
 
 /**
  *
@@ -52,6 +54,34 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
 
     public void checkCreation(ProductOrder newProductOrder) throws BadUsageException {
 
+        if (null == newProductOrder.getState()) {
+            newProductOrder.setState(State.Acknowledged);
+        } else {
+            if (!newProductOrder.getState().name().equalsIgnoreCase(State.Acknowledged.name())) {
+                throw new BadUsageException(ExceptionType.BAD_USAGE_FLOW_TRANSITION, "state " + newProductOrder.getState().value() + " is not the first state, attempt : " + State.Acknowledged.value());
+            }
+        }
+
+        if (null == newProductOrder.getPriority()) {
+            newProductOrder.setPriority("4");
+        }
+
+        if (null == newProductOrder.getCategory()) {
+            newProductOrder.setCategory("uncategorized");
+        }
+
+        if (null == newProductOrder.getRequestedStartDate()) {
+            newProductOrder.setRequestedStartDate(new Date());
+        }
+
+        if (null == newProductOrder.getRequestedCompletionDate()) {
+            newProductOrder.setRequestedCompletionDate(new Date());
+        }
+
+        if (null == newProductOrder.getRequestedCompletionDate()) {
+            newProductOrder.setRequestedCompletionDate(new Date());
+        }
+
 //      POST Mandatory attributes within product Order
         if (null != newProductOrder.getNote()) {
             List<Note> l_note = newProductOrder.getNote();
@@ -84,6 +114,11 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
         if (null != newProductOrder.getOrderItem()) {
             List<OrderItem> l_orderItem = newProductOrder.getOrderItem();
             for (OrderItem orderItem : l_orderItem) {
+                if (null == orderItem.getState()) {
+                    orderItem.setState(State.Acknowledged);
+                } else {
+                    throw new BadUsageException(ExceptionType.BAD_USAGE_FLOW_TRANSITION, "orderItem.state " + orderItem.getState().value() + " is not the first state, attempt : " + State.Acknowledged.value());
+                }
                 if (null == orderItem.getAction()) {
                     throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS, "orderItem.action is mandatory");
                 }
@@ -158,6 +193,40 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
             throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR, "completionDate not patchable");
         }
 
+        if (null != partialProduct.getState()) {
+            if (partialProduct.getState().name().equalsIgnoreCase(State.Pending.name())) {
+                if (null != currentProduct.getOrderItem()) {
+                    List<OrderItem> l_orderItem = currentProduct.getOrderItem();
+                    for (OrderItem orderItem : l_orderItem) {
+                        if (null != orderItem.getState() || orderItem.getState().name().equalsIgnoreCase(State.InProgress.name())) {
+                            orderItem.setState(State.Pending);
+                        }
+                    }
+                }
+            }
+            if (partialProduct.getState().name().equalsIgnoreCase(State.Held.name())) {
+                if (null != currentProduct.getOrderItem()) {
+                    List<OrderItem> l_orderItem = currentProduct.getOrderItem();
+                    for (OrderItem orderItem : l_orderItem) {
+                        if (null != orderItem.getState() || orderItem.getState().name().equalsIgnoreCase(State.InProgress.name())) {
+                            orderItem.setState(State.Held);
+                        }
+                    }
+                }
+            }
+            if (partialProduct.getState().name().equalsIgnoreCase(State.InProgress.name())) {
+                if (null != currentProduct.getOrderItem()) {
+                    List<OrderItem> l_orderItem = currentProduct.getOrderItem();
+                    for (OrderItem orderItem : l_orderItem) {
+//                        if (null != orderItem.getState() || orderItem.getState().name().equalsIgnoreCase(State.InProgress.name())) {
+                            orderItem.setState(State.InProgress);
+//                        }
+                    }
+                }
+            }
+
+        }
+
         if (null != partialProduct.getOrderItem()) {
             if (null != partialProduct.getOrderItem()) {
                 List<OrderItem> l_orderItem = partialProduct.getOrderItem();
@@ -168,6 +237,54 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
                     if (null == orderItem.getAction()) {
                         throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR, "orderItem.action not patchable");
                     }
+                    if (null != partialProduct.getState()) {
+                        if (null != orderItem.getBillingAccount()) {
+                            if (!partialProduct.getState().name().equalsIgnoreCase(State.Acknowledged.name())) {
+                                throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR,
+                                        "orderItem.billingAccount is patchable only with order state : " + State.Acknowledged.name());
+                            }
+                        }
+                        if (null != orderItem.getProduct()) {
+                            if (!partialProduct.getState().name().equalsIgnoreCase(State.Acknowledged.name())
+                                    && !partialProduct.getState().name().equalsIgnoreCase(State.Pending.name())) {
+                                throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR,
+                                        "orderItem.product is patchable only with order state : " + State.Acknowledged.name() + " or " + State.Pending.name());
+                            }
+                        } else {
+                            if (null != orderItem.getProduct().getPlace()) {
+                                if (!partialProduct.getState().name().equalsIgnoreCase(State.Acknowledged.name())
+                                        && !partialProduct.getState().name().equalsIgnoreCase(State.Pending.name())) {
+                                    throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR,
+                                            "orderItem.product.place is patchable only with order state : " + State.Acknowledged.name() + " or " + State.Pending.name());
+                                }
+                            }
+                        }
+                        if (null != orderItem.getAppointment()) {
+                            if (!partialProduct.getState().name().equalsIgnoreCase(State.Acknowledged.name())
+                                    && !partialProduct.getState().name().equalsIgnoreCase(State.Pending.name())) {
+                                throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR,
+                                        "orderItem.appointment is patchable only with order state : " + State.Acknowledged.name() + " or " + State.Pending.name());
+                            }
+                        }
+                    } else {
+                        if (null != orderItem.getBillingAccount()
+                                || null != orderItem.getProduct()
+                                || null != orderItem.getAppointment()) {
+                            throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR,
+                                    "orderItem billingAccount, product, appointment are patchable "
+                                    + "only with order state : " + State.Acknowledged.name() + " or " + State.Pending.name());
+
+                        }
+                        if (orderItem.getState().name().equalsIgnoreCase(State.Pending.name())
+                                || orderItem.getState().name().equalsIgnoreCase(State.Held.name())) {
+                            if (!partialProduct.getState().name().equalsIgnoreCase(State.Pending.name())
+                                    && !partialProduct.getState().name().equalsIgnoreCase(State.Held.name())) {
+                                throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR,
+                                        "order.state must be equal : " + State.Pending.name() + " or " + State.Held.name()
+                                        + "if orderItem state equal" + State.Pending.name() + " or " + State.Held.name());
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -176,7 +293,7 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
             stateModel.checkTransition(currentProduct.getState(), partialProduct.getState());
             System.out.println("About to publish statusChangedNotification ");
 
-            publisher.statusChangedNotification(currentProduct, new Date());
+            publisher.stateChangeNotification(currentProduct, new Date());
         } else {
             System.out.println("No State detectd ");
             //throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS, "state" + " is not found");
@@ -187,7 +304,7 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.convertValue(partialProduct, JsonNode.class);
         if (BeanUtils.patch(currentProduct, partialProduct, node)) {
-            publisher.valueChangedNotification(currentProduct, new Date());
+            publisher.valueChangeNotification(currentProduct, new Date());
         }
         return currentProduct;
     }

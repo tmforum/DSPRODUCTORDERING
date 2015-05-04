@@ -6,14 +6,12 @@ package org.tmf.dsmapi.productOrder.event;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,7 +31,7 @@ import org.tmf.dsmapi.productOrder.model.ProductOrder;
  */
 @XmlRootElement
 @Entity
-@Table(name="Event_ProductOrder")
+@Table(name = "Event_ProductOrder")
 @JsonPropertyOrder(value = {"id", "eventTime", "eventType", "event"})
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Event implements Serializable {
@@ -42,36 +40,35 @@ public class Event implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("eventId")
     private String id;
-
     @Temporal(TemporalType.TIMESTAMP)
     @JsonSerialize(using = CustomJsonDateSerializer.class)
     private Date eventTime;
-
     @Enumerated(value = EnumType.STRING)
     private EventTypeEnum eventType;
-
     @JsonIgnore
     private ProductOrder resource; //check for object
-    
+
     @JsonAutoDetect(fieldVisibility = ANY)
     class EventBody {
+
         private ProductOrder productOrder;
+
         public ProductOrder getProductOrder() {
             return productOrder;
         }
-        public EventBody(ProductOrder productOrder) { 
-        this.productOrder = productOrder;
-    }
+
+        public EventBody(ProductOrder productOrder) {
+            this.productOrder = productOrder;
+        }
     }
 
-  @JsonProperty("event")
-   public EventBody getEvent() {
-       
-       return new EventBody(getResource() );
-   }
-    
-  @JsonIgnore 
+    @JsonProperty("event")
+    public EventBody getEvent() {
 
+        return new EventBody(getResource());
+    }
+
+    @JsonIgnore
     public String getId() {
         return id;
     }
@@ -95,11 +92,11 @@ public class Event implements Serializable {
     public void setEventType(EventTypeEnum eventType) {
         this.eventType = eventType;
     }
-    
+
     @JsonIgnore
     public ProductOrder getResource() {
-        
-        
+
+
         return resource;
     }
 
@@ -111,8 +108,4 @@ public class Event implements Serializable {
     public String toString() {
         return "Event{" + "id=" + id + ", eventTime=" + eventTime + ", eventType=" + eventType + ", resource=" + resource + '}';
     }
-
-
-    
-    
 }

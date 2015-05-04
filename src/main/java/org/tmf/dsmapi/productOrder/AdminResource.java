@@ -88,7 +88,7 @@ public class AdminResource {
         if (productOrderingManagement != null) {
             entity.setId(id);
             productOrderingManagementFacade.edit(entity);
-            publisher.valueChangedNotification(entity, new Date());
+            publisher.valueChangeNotification(entity, new Date());
             // 201 OK + location
             response = Response.status(Response.Status.CREATED).entity(entity).build();
 
@@ -141,7 +141,7 @@ public class AdminResource {
             ProductOrder entity = productOrderingManagementFacade.find(id);
 
             // Event deletion
-            publisher.deletionNotification(entity, new Date());
+            publisher.removeNotification(entity, new Date());
             try {
                 //Pause for 4 seconds to finish notification
                 Thread.sleep(4000);

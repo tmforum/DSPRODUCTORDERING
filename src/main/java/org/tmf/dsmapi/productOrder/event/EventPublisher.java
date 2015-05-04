@@ -66,7 +66,7 @@ public class EventPublisher implements EventPublisherLocal {
     }
 
     @Override
-    public void deletionNotification(ProductOrder bean, Date date) {
+    public void removeNotification(ProductOrder bean, Date date) {
         Event event = new Event();
         event.setEventTime(date);
         event.setResource(bean);
@@ -75,16 +75,16 @@ public class EventPublisher implements EventPublisherLocal {
     }
 	
     @Override
-    public void updateNotification(ProductOrder bean, Date date) {
+    public void orderInformationRequiredNotification(ProductOrder bean, Date date) {
         Event event = new Event();
         event.setEventTime(date);
         event.setResource(bean);
-        event.setEventType(EventTypeEnum.ProductOrderUpdateNotification);
+        event.setEventType(EventTypeEnum.orderInformationRequiredNotification);
         publish(event);
     }
 
     @Override
-    public void valueChangedNotification(ProductOrder bean, Date date) {
+    public void valueChangeNotification(ProductOrder bean, Date date) {
         Event event = new Event();
         event.setEventTime(date);
        event.setResource(bean);
@@ -93,7 +93,7 @@ public class EventPublisher implements EventPublisherLocal {
     }
 
     @Override
-    public void statusChangedNotification(ProductOrder bean, Date date) {
+    public void stateChangeNotification(ProductOrder bean, Date date) {
         Event event = new Event();
         event.setEventTime(date);
         event.setResource(bean);

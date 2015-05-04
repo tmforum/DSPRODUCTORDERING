@@ -157,7 +157,7 @@ public class ProductOrderResource {
             ProductOrder entity = productOrderingManagementFacade.find(id);
 
             // Event deletion
-            publisher.deletionNotification(entity, new Date());
+            publisher.removeNotification(entity, new Date());
             try {
                 //Pause for 4 seconds to finish notification
                 Thread.sleep(4000);

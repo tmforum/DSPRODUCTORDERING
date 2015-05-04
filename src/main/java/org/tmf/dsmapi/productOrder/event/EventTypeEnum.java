@@ -7,7 +7,7 @@ package org.tmf.dsmapi.productOrder.event;
 public enum EventTypeEnum {
 
     orderCreationNotification("orderCreationNotification"),
-    ProductOrderUpdateNotification("ProductOrderUpdateNotification"), /* ??? */
+    orderInformationRequiredNotification("orderInformationRequiredNotification"),
     orderRemoveNotification("orderRemoveNotification"),
     orderValueChangeNotification("orderValueChangeNotification"),
     orderStateChangeNotification("orderStateChangeNotification");
