@@ -55,7 +55,7 @@ public class ProductOrderResource {
     public Response create(ProductOrder entity) throws BadUsageException, UnknownResourceException {
         productOrderingManagementFacade.checkCreation(entity);
         productOrderingManagementFacade.create(entity);
-        entity.setHref("href/".concat(Long.toString(entity.getId())));
+        entity.setHref("http://serverLocalisation:port/DSPRODUCTORDERING/api/productOrdering/v2/productOrder/".concat(Long.toString(entity.getId())));
         productOrderingManagementFacade.edit(entity);
         publisher.createNotification(entity, new Date());
         
