@@ -69,7 +69,7 @@ public class ProductOffering
     protected String id;
     protected String href;
     protected List<Reference> bundledProductOffering;
-    @XmlAttribute(name = "Hjid")
+    @org.codehaus.jackson.annotate.JsonIgnore
     protected Long hjid;
 
     /**

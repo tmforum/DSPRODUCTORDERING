@@ -67,7 +67,7 @@ public class Reference
     protected String href;
     protected String name;
     protected String role;
-    @XmlAttribute(name = "Hjid")
+    @org.codehaus.jackson.annotate.JsonIgnore
     protected Long hjid;
 
     /**

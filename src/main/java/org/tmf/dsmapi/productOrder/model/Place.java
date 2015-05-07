@@ -61,7 +61,7 @@ public class Place
     private final static long serialVersionUID = 11L;
     protected String href;
     protected String role;
-    @XmlAttribute(name = "Hjid")
+    @org.codehaus.jackson.annotate.JsonIgnore
     protected Long hjid;
 
     /**

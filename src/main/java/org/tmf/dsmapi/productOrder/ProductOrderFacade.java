@@ -83,7 +83,8 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
         }
 
 //      POST Mandatory attributes within product Order
-        if (null != newProductOrder.getNote()) {
+        if (null != newProductOrder.getNote()
+                && !newProductOrder.getNote().isEmpty()) {
             List<Note> l_note = newProductOrder.getNote();
             for (Note note : l_note) {
                 if (null == note.getText()) {
@@ -92,7 +93,8 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
             }
         }
 
-        if (null != newProductOrder.getRelatedParty()) {
+        if (null != newProductOrder.getRelatedParty()
+                && !newProductOrder.getRelatedParty().isEmpty()) {
             List<Reference> l_relatedParty = newProductOrder.getRelatedParty();
             for (Reference relatedParty : l_relatedParty) {
                 if (null == relatedParty.getId()
@@ -111,7 +113,8 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
         }
 
 //      POST Mandatory attributes within product Order item
-        if (null != newProductOrder.getOrderItem()) {
+        if (null != newProductOrder.getOrderItem()
+                && !newProductOrder.getOrderItem().isEmpty()) {
             List<OrderItem> l_orderItem = newProductOrder.getOrderItem();
             for (OrderItem orderItem : l_orderItem) {
                 if (null == orderItem.getState()) {
@@ -195,7 +198,8 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
 
         if (null != partialProduct.getState()) {
             if (partialProduct.getState().name().equalsIgnoreCase(State.Pending.name())) {
-                if (null != currentProduct.getOrderItem()) {
+                if (null != currentProduct.getOrderItem()
+                        && !currentProduct.getOrderItem().isEmpty()) {
                     List<OrderItem> l_orderItem = currentProduct.getOrderItem();
                     for (OrderItem orderItem : l_orderItem) {
                         if (null != orderItem.getState() || orderItem.getState().name().equalsIgnoreCase(State.InProgress.name())) {
@@ -205,7 +209,8 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
                 }
             }
             if (partialProduct.getState().name().equalsIgnoreCase(State.Held.name())) {
-                if (null != currentProduct.getOrderItem()) {
+                if (null != currentProduct.getOrderItem()
+                        && !currentProduct.getOrderItem().isEmpty()) {
                     List<OrderItem> l_orderItem = currentProduct.getOrderItem();
                     for (OrderItem orderItem : l_orderItem) {
                         if (null != orderItem.getState() || orderItem.getState().name().equalsIgnoreCase(State.InProgress.name())) {
@@ -215,7 +220,8 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
                 }
             }
             if (partialProduct.getState().name().equalsIgnoreCase(State.InProgress.name())) {
-                if (null != currentProduct.getOrderItem()) {
+                if (null != currentProduct.getOrderItem()
+                        && !currentProduct.getOrderItem().isEmpty()) {
                     List<OrderItem> l_orderItem = currentProduct.getOrderItem();
                     for (OrderItem orderItem : l_orderItem) {
 //                        if (null != orderItem.getState() || orderItem.getState().name().equalsIgnoreCase(State.InProgress.name())) {
@@ -228,7 +234,8 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
         }
 
         if (null != partialProduct.getOrderItem()) {
-            if (null != partialProduct.getOrderItem()) {
+            if (null != partialProduct.getOrderItem()
+                    && !partialProduct.getOrderItem().isEmpty()) {
                 List<OrderItem> l_orderItem = partialProduct.getOrderItem();
                 for (OrderItem orderItem : l_orderItem) {
                     if (null == orderItem.getId()) {

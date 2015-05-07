@@ -61,7 +61,7 @@ public class BillingAccount
     private final static long serialVersionUID = 11L;
     protected String id;
     protected String href;
-    @XmlAttribute(name = "Hjid")
+    @org.codehaus.jackson.annotate.JsonIgnore
     protected Long hjid;
 
     /**

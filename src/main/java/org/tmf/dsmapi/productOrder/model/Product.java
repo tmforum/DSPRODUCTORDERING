@@ -79,7 +79,7 @@ public class Product
     protected List<ProductRelationship> productRelationship;
     protected String id;
     protected String href;
-    @XmlAttribute(name = "Hjid")
+    @org.codehaus.jackson.annotate.JsonIgnore
     protected Long hjid;
 
     /**

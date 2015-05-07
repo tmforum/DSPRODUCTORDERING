@@ -66,7 +66,7 @@ public class ProductRelationship
     private final static long serialVersionUID = 11L;
     protected ProductRelationShipType type;
     protected Product product;
-    @XmlAttribute(name = "Hjid")
+    @org.codehaus.jackson.annotate.JsonIgnore
     protected Long hjid;
 
     /**

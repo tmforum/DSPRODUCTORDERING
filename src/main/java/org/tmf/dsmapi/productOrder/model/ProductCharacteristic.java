@@ -61,7 +61,7 @@ public class ProductCharacteristic
     private final static long serialVersionUID = 11L;
     protected String name;
     protected String value;
-    @XmlAttribute(name = "Hjid")
+    @org.codehaus.jackson.annotate.JsonIgnore
     protected Long hjid;
 
     /**

@@ -84,7 +84,7 @@ public class OrderItem
     protected String appointment;
     protected ProductOffering productOffering;
     protected Product product;
-    @XmlAttribute(name = "Hjid")
+    @org.codehaus.jackson.annotate.JsonIgnore
     protected Long hjid;
 
     /**
