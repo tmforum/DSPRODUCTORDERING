@@ -33,7 +33,7 @@ import org.tmf.dsmapi.productOrder.event.EventPublisherLocal;
 import org.tmf.dsmapi.productOrder.model.ProductOrder;
 
 @Stateless
-@Path("productOrder")
+@Path("/productOrdering/v2/productOrder")
 public class ProductOrderResource {
 
     @EJB

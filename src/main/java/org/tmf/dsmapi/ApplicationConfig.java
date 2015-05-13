@@ -7,7 +7,7 @@ package org.tmf.dsmapi;
 import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.server.ResourceConfig;
 
-@javax.ws.rs.ApplicationPath("api/productOrdering/v2")
+@javax.ws.rs.ApplicationPath("api")
 public class ApplicationConfig extends ResourceConfig {
     
     public ApplicationConfig() {
