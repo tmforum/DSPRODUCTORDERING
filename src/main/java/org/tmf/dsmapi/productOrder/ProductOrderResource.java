@@ -152,8 +152,7 @@ public class ProductOrderResource {
 
     @DELETE
     @Path("{id}")
-    public Response delete(@PathParam("id") long id) {
-        try {
+    public Response delete(@PathParam("id") long id) throws UnknownResourceException {
             ProductOrder entity = productOrderingManagementFacade.find(id);
 
             // Event deletion
@@ -174,13 +173,8 @@ public class ProductOrderResource {
             //remove resource
             productOrderingManagementFacade.remove(id);
 
-            // 200 
-            Response response = Response.ok(entity).build();
-            return response;
-        } catch (UnknownResourceException ex) {
-            Response response = Response.status(Response.Status.NOT_FOUND).build();
-            return response;
-        }
+            // 204
+            return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @PATCH
@@ -191,8 +185,8 @@ public class ProductOrderResource {
         Response response = null;
         ProductOrder currentProduct = productOrderingManagementFacade.updateAttributs(id, partialProduct);
         
-        // 201 OK + location
-        response = Response.status(Response.Status.CREATED).entity(currentProduct).build();
+        // 200 OK + location
+        response = Response.status(Response.Status.OK).entity(currentProduct).build();
 
         return response;
     }
