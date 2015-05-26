@@ -183,7 +183,7 @@ public class ProductOrderResource {
     @Produces({"application/json"})
     public Response patch(@PathParam("id") long id, ProductOrder partialProduct) throws BadUsageException, UnknownResourceException {
         Response response = null;
-        ProductOrder currentProduct = productOrderingManagementFacade.updateAttributs(id, partialProduct);
+        ProductOrder currentProduct = productOrderingManagementFacade.patchAttributs(id, partialProduct);
         
         // 200 OK + location
         response = Response.status(Response.Status.OK).entity(currentProduct).build();

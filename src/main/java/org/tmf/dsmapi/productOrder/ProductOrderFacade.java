@@ -43,16 +43,14 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
         return em;
     }
 
-    @Override
-    public void create(ProductOrder entity) throws BadUsageException {
-        if (entity.getId() != null) {
-            throw new BadUsageException(ExceptionType.BAD_USAGE_GENERIC, "While creating ProductOrder, id must be null");
+    public void checkCreation(ProductOrder newProductOrder) throws BadUsageException, UnknownResourceException {
+
+        if (newProductOrder.getId() != null) {
+            if (this.find(newProductOrder.getId()) != null) {
+                throw new BadUsageException(ExceptionType.BAD_USAGE_GENERIC,
+                        "Duplicate Exception, Product with same id :" + newProductOrder.getId() + " alreay exists");
+            }
         }
-
-        super.create(entity);
-    }
-
-    public void checkCreation(ProductOrder newProductOrder) throws BadUsageException {
 
         if (null == newProductOrder.getState()) {
             newProductOrder.setState(State.Acknowledged);
@@ -62,11 +60,13 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
             }
         }
 
-        if (null == newProductOrder.getPriority()) {
+        if (null == newProductOrder.getPriority()
+                || newProductOrder.getPriority().isEmpty()) {
             newProductOrder.setPriority("4");
         }
 
-        if (null == newProductOrder.getCategory()) {
+        if (null == newProductOrder.getCategory()
+                || newProductOrder.getCategory().isEmpty()) {
             newProductOrder.setCategory("uncategorized");
         }
 
@@ -87,7 +87,8 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
                 && !newProductOrder.getNote().isEmpty()) {
             List<Note> l_note = newProductOrder.getNote();
             for (Note note : l_note) {
-                if (null == note.getText()) {
+                if (null == note.getText()
+                        || note.getText().isEmpty()) {
                     throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS, "note.text is mandatory");
                 }
             }
@@ -97,13 +98,14 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
                 && !newProductOrder.getRelatedParty().isEmpty()) {
             List<Reference> l_relatedParty = newProductOrder.getRelatedParty();
             for (Reference relatedParty : l_relatedParty) {
-                if (null == relatedParty.getId()
-                        && null == relatedParty.getHref()
-                        && null == relatedParty.getName()) {
+                if ((null == relatedParty.getId() || relatedParty.getId().isEmpty())
+                        && (null == relatedParty.getHref() || relatedParty.getHref().isEmpty())
+                        && (null == relatedParty.getName() || relatedParty.getName().isEmpty())) {
                     throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS,
                             "relatedParty . id AND/OR href AND/OR name are mandatory");
                 }
-                if (null == relatedParty.getRole()) {
+                if (null == relatedParty.getRole()
+                        || relatedParty.getRole().isEmpty()) {
                     throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS,
                             "relatedParty.role is mandatory");
                 }
@@ -122,7 +124,16 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
                 } else {
                     throw new BadUsageException(ExceptionType.BAD_USAGE_FLOW_TRANSITION, "orderItem.state " + orderItem.getState().value() + " is not the first state, attempt : " + State.Acknowledged.value());
                 }
-                if (null == orderItem.getAction()) {
+                if (null == orderItem.getId()
+                        || orderItem.getId().isEmpty()) {
+                    throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS, "orderItem.id  is mandatory");
+                }
+                if (null == orderItem.getBillingAccount()
+                        || orderItem.getBillingAccount().isEmpty()) {
+                    throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS, "orderItem.billingAccount is mandatory");
+                }
+                if (null == orderItem.getAction()
+                        || orderItem.getAction().isEmpty()) {
                     throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS, "orderItem.action is mandatory");
                 }
                 if (null == orderItem.getProduct()) {
@@ -132,17 +143,23 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
                     if (null == orderItem.getProductOffering()) {
                         throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS, "orderItem.productOffering is mandatory if action is add");
                     } else {
-                        if (null == orderItem.getProductOffering().getId()
-                                && null == orderItem.getProductOffering().getHref()) {
+                        if ((null == orderItem.getProductOffering().getId() || orderItem.getProductOffering().getId().isEmpty())
+                                && (null == orderItem.getProductOffering().getHref() || orderItem.getProductOffering().getHref().isEmpty())) {
                             throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS,
                                     "orderItem.productOffering id AND/OR href are mandatory");
+                        }
+                    }
+                    if (null != orderItem.getProduct()) {
+                        if (null == orderItem.getProduct().getProductCharacteristic()
+                                || orderItem.getProduct().getProductCharacteristic().isEmpty()) {
+                            throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS, "orderItem.product.productCharacteristic is mandatory if action is add");
                         }
                     }
                 } else if (orderItem.getAction().equalsIgnoreCase("modify")
                         || orderItem.getAction().equalsIgnoreCase("delete")) {
                     if (null != orderItem.getProduct()) {
-                        if (null == orderItem.getProduct().getId()
-                                && null == orderItem.getProduct().getHref()) {
+                        if ((null == orderItem.getProduct().getId() || orderItem.getProduct().getId().isEmpty())
+                                && (null == orderItem.getProduct().getHref() || orderItem.getProduct().getHref().isEmpty())) {
                             throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS,
                                     "orderItem.product id AND/OR href are mandatory  if action is 'modify' or 'delete'");
                         }
@@ -152,12 +169,13 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
                     }
                 }
                 if (null != orderItem.getProduct().getPlace()) {
-                    if (null == orderItem.getProduct().getPlace().getRole()) {
+                    if (null == orderItem.getProduct().getPlace().getRole()
+                            || orderItem.getProduct().getPlace().getRole().isEmpty()) {
                         throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS,
                                 "orderItem.product.place.role is mandatory");
                     }
-                    if (null == orderItem.getProduct().getPlace().getId()
-                            && null == orderItem.getProduct().getPlace().getHref()) {
+                    if ((null == orderItem.getProduct().getPlace().getId() || orderItem.getProduct().getPlace().getId().isEmpty())
+                            && (null == orderItem.getProduct().getPlace().getHref() || orderItem.getProduct().getPlace().getHref().isEmpty())) {
                         throw new BadUsageException(ExceptionType.BAD_USAGE_MANDATORY_FIELDS,
                                 "orderItem.product.place id AND/OR href are mandatory");
                     }
@@ -169,7 +187,7 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
 
     }
 
-    public ProductOrder updateAttributs(long id, ProductOrder partialProduct) throws UnknownResourceException, BadUsageException {
+    public ProductOrder patchAttributs(long id, ProductOrder partialProduct) throws UnknownResourceException, BadUsageException {
         ProductOrder currentProduct = this.find(id);
 
         if (currentProduct == null) {
@@ -225,11 +243,13 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
                     List<OrderItem> l_orderItem = currentProduct.getOrderItem();
                     for (OrderItem orderItem : l_orderItem) {
 //                        if (null != orderItem.getState() || orderItem.getState().name().equalsIgnoreCase(State.InProgress.name())) {
-                            orderItem.setState(State.InProgress);
+                        orderItem.setState(State.InProgress);
 //                        }
                     }
                 }
             }
+
+        } else {
 
         }
 
@@ -238,14 +258,15 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
                     && !partialProduct.getOrderItem().isEmpty()) {
                 List<OrderItem> l_orderItem = partialProduct.getOrderItem();
                 for (OrderItem orderItem : l_orderItem) {
-                    if (null == orderItem.getId()) {
+                    if (null != orderItem.getId()) {
                         throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR, "orderItem.id not patchable");
                     }
-                    if (null == orderItem.getAction()) {
+                    if (null != orderItem.getAction()) {
                         throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR, "orderItem.action not patchable");
                     }
                     if (null != partialProduct.getState()) {
-                        if (null != orderItem.getBillingAccount()) {
+                        if (null != orderItem.getBillingAccount()
+                                && !orderItem.getBillingAccount().isEmpty()) {
                             if (!partialProduct.getState().name().equalsIgnoreCase(State.Acknowledged.name())) {
                                 throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR,
                                         "orderItem.billingAccount is patchable only with order state : " + State.Acknowledged.name());
@@ -266,7 +287,8 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
                                 }
                             }
                         }
-                        if (null != orderItem.getAppointment()) {
+                        if (null != orderItem.getAppointment()
+                                && !orderItem.getAppointment().isEmpty()) {
                             if (!partialProduct.getState().name().equalsIgnoreCase(State.Acknowledged.name())
                                     && !partialProduct.getState().name().equalsIgnoreCase(State.Pending.name())) {
                                 throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR,
@@ -274,21 +296,25 @@ public class ProductOrderFacade extends AbstractFacade<ProductOrder> {
                             }
                         }
                     } else {
-                        if (null != orderItem.getBillingAccount()
-                                || null != orderItem.getProduct()
-                                || null != orderItem.getAppointment()) {
-                            throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR,
-                                    "orderItem billingAccount, product, appointment are patchable "
-                                    + "only with order state : " + State.Acknowledged.name() + " or " + State.Pending.name());
-
-                        }
-                        if (orderItem.getState().name().equalsIgnoreCase(State.Pending.name())
-                                || orderItem.getState().name().equalsIgnoreCase(State.Held.name())) {
-                            if (!partialProduct.getState().name().equalsIgnoreCase(State.Pending.name())
-                                    && !partialProduct.getState().name().equalsIgnoreCase(State.Held.name())) {
+                        if (!currentProduct.getState().name().equalsIgnoreCase(State.Acknowledged.name())
+                                && !currentProduct.getState().name().equalsIgnoreCase(State.Pending.name())) {
+                            //TODO prendre le state du currentProduct
+                            if (null != orderItem.getBillingAccount()
+                                    || null != orderItem.getProduct()
+                                    || null != orderItem.getAppointment()) {
                                 throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR,
-                                        "order.state must be equal : " + State.Pending.name() + " or " + State.Held.name()
-                                        + "if orderItem state equal" + State.Pending.name() + " or " + State.Held.name());
+                                        "orderItem billingAccount, product, appointment are patchable "
+                                        + "only with order state : " + State.Acknowledged.name() + " or " + State.Pending.name());
+
+                            }
+                            if (orderItem.getState().name().equalsIgnoreCase(State.Pending.name())
+                                    || orderItem.getState().name().equalsIgnoreCase(State.Held.name())) {
+                                if (!partialProduct.getState().name().equalsIgnoreCase(State.Pending.name())
+                                        && !partialProduct.getState().name().equalsIgnoreCase(State.Held.name())) {
+                                    throw new BadUsageException(ExceptionType.BAD_USAGE_OPERATOR,
+                                            "order.state must be equal : " + State.Pending.name() + " or " + State.Held.name()
+                                            + "if orderItem state equal" + State.Pending.name() + " or " + State.Held.name());
+                                }
                             }
                         }
                     }
